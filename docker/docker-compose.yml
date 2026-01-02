@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: toby-ddd
+
+    restart: always
+
+    # 환경 변수 설정
+    environment:
+#      POSTGRES_USER: ${POSTGRES_USER:-hyeonsig}
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?데이터베이스 비밀번호가 설정되지 않았습니다!}
+#      POSTGRES_DB: ${POSTGRES_DB:-hyeonsig}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=ko_KR.UTF-8"
+      TZ: Asia/Seoul
+
+    volumes:
+      - postgres-config:/etc/postgresql
+      - postgres-data:/var/lib/postgresql
+      - postgres-init:/docker-entrypoint-initdb.d
+
+    ports:
+      - "${DB_PORT}:5432"
+
+    env_file:
+      - ../.env
+
+volumes:
+  postgres-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./conf
+  postgres-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data
+  postgres-init:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./init
