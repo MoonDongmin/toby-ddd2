@@ -1,34 +1,56 @@
 import { MemberStatus } from '@/domain/member-status';
+import { Assert } from '@/common/util/assert';
+import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
 
 export class Member {
-  private readonly _email!: string;
+  private readonly email: string;
 
-  private readonly _nickname!: string;
+  private readonly nickname: string;
 
-  private readonly _passwordHash!: string;
+  private readonly passwordHash: string;
 
-  private readonly _status!: MemberStatus;
+  private status: MemberStatus;
 
   constructor(email: string, nickname: string, passwordHash: string) {
-    this._email = email;
-    this._nickname = nickname;
-    this._passwordHash = passwordHash;
-    this._status = MemberStatus.PENDING;
+    if (!email || !nickname || !passwordHash) {
+      throw new IllegalArgumentException('Invalid member properties');
+    }
+
+    this.email = email;
+    this.nickname = nickname;
+    this.passwordHash = passwordHash;
+
+    this.status = MemberStatus.PENDING;
+  }
+
+  public activate(): void {
+    Assert.state(
+      this.status === MemberStatus.PENDING,
+      `PENDING 상태가 아닙니다`,
+    );
+
+    this.status = MemberStatus.ACTIVE;
+  }
+
+  public deactivate(): void {
+    Assert.state(this.status === MemberStatus.ACTIVE, `ACTIVE 상태가 아닙니다`);
+
+    this.status = MemberStatus.DEACTIVATED;
   }
 
   public getEmail(): string {
-    return this._email;
+    return this.email;
   }
 
   public getNickname(): string {
-    return this._nickname;
+    return this.nickname;
   }
 
   public getPasswordHash(): string {
-    return this._passwordHash;
+    return this.passwordHash;
   }
 
   public getStatus(): MemberStatus {
-    return this._status;
+    return this.status;
   }
 }
