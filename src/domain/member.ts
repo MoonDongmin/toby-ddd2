@@ -1,18 +1,30 @@
 import { MemberStatus } from '@/domain/member-status';
 import { Assert } from '@/common/util/assert';
 import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
+import { PasswordEncoder } from '@/domain/password-encoder';
 
 export class Member {
-  private readonly email: string;
+  private email: NonNullable<string>;
 
-  private readonly nickname: string;
+  private nickname: NonNullable<string>;
 
-  private readonly passwordHash: string;
+  private passwordHash: NonNullable<string>;
 
   private status: MemberStatus;
 
-  constructor(email: string, nickname: string, passwordHash: string) {
-    if (!email || !nickname || !passwordHash) {
+  private constructor(
+    email: NonNullable<string>,
+    nickname: NonNullable<string>,
+    passwordHash: NonNullable<string>,
+  ) {
+    if (
+      email === undefined ||
+      email === null ||
+      nickname === undefined ||
+      nickname === null ||
+      passwordHash === undefined ||
+      passwordHash === null
+    ) {
       throw new IllegalArgumentException('Invalid member properties');
     }
 
@@ -21,6 +33,15 @@ export class Member {
     this.passwordHash = passwordHash;
 
     this.status = MemberStatus.PENDING;
+  }
+
+  public static create(
+    email: string,
+    nickname: string,
+    password: string,
+    passwordEncoder: PasswordEncoder,
+  ) {
+    return new Member(email, nickname, passwordEncoder.encode(password));
   }
 
   public activate(): void {
@@ -36,6 +57,21 @@ export class Member {
     Assert.state(this.status === MemberStatus.ACTIVE, `ACTIVE 상태가 아닙니다`);
 
     this.status = MemberStatus.DEACTIVATED;
+  }
+
+  public verifyPassword(
+    password: string,
+    passwordEncoder: PasswordEncoder,
+  ): boolean {
+    return passwordEncoder.matches(password, this.passwordHash);
+  }
+
+  public changeNickname(nickname: string) {
+    this.nickname = nickname;
+  }
+
+  public changePassword(password: string, passwordEncoder: PasswordEncoder) {
+    this.passwordHash = passwordEncoder.encode(password);
   }
 
   public getEmail(): string {

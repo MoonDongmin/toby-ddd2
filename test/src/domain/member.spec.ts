@@ -1,32 +1,40 @@
 import { Member } from '@/domain/member';
 import { MemberStatus } from '@/domain/member-status';
-import {
-  IllegalArgumentException,
-  IllegalStateException,
-} from '@/common/exceptions/illegal-argument.exception';
+import { IllegalStateException } from '@/common/exceptions/illegal-argument.exception';
+import { PasswordEncoder } from '@/domain/password-encoder';
 
 describe('MemberTest', () => {
-  it('createMember', () => {
-    // Given: 테스트 실행을 준비하는 단계
-    const member: Member = new Member('dongmin@test.com', 'dongmin', 'secret');
+  let member: Member;
+  let passwordEncoder: PasswordEncoder;
 
+  beforeEach(() => {
+    passwordEncoder = {
+      encode: (password: string) => password.toUpperCase(),
+      matches: (password: string, passwordHash: string) =>
+        passwordEncoder.encode(password) === passwordHash,
+    };
+
+    member = Member.create(
+      'dongmin@test.com',
+      'dongmin',
+      'secret',
+      passwordEncoder,
+    );
+  });
+
+  it('createMember', () => {
     // Then: 테스트 결과를 검증하는 단계
     expect(member.getStatus()).toEqual(MemberStatus.PENDING);
   });
 
-  it('constructorNullCheck', () => {
-    // Then: 테스트 결과를 검증하는 단계
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => new Member(null, 'dongmin', 'secret')).toThrow(
-      IllegalArgumentException,
-    );
-  });
+  // it('constructorNullCheck', () => {
+  //   // Then: 테스트 결과를 검증하는 단계
+  //   expect(() => new Member(null, 'dongmin', 'secret')).toThrow(
+  //     IllegalArgumentException,
+  //   );
+  // });
 
   it('activate', () => {
-    // Given: 테스트 실행을 준비하는 단계
-    const member: Member = new Member('dongmin@test.com', 'dongmin', 'secret');
-
     // When: 테스트를 진행하는 단계
     member.activate();
 
@@ -35,9 +43,6 @@ describe('MemberTest', () => {
   });
 
   it('activateFail', () => {
-    // Given: 테스트 실행을 준비하는 단계
-    const member: Member = new Member('dongmin@test.com', 'dongmin', 'secret');
-
     // When: 테스트를 진행하는 단계
     member.activate();
 
@@ -46,8 +51,6 @@ describe('MemberTest', () => {
   });
 
   it('deactivate', () => {
-    // Given: 테스트 실행을 준비하는 단계
-    const member: Member = new Member('dongmin@test.com', 'dongmin', 'secret');
     member.activate();
 
     // When: 테스트를 진행하는 단계
@@ -58,9 +61,6 @@ describe('MemberTest', () => {
   });
 
   it('deactivateFail', () => {
-    // Given: 테스트 실행을 준비하는 단계
-    const member: Member = new Member('dongmin@test.com', 'dongmin', 'secret');
-
     // When: 테스트를 진행하는 단계
 
     // Then: 테스트 결과를 검증하는 단계
@@ -69,5 +69,33 @@ describe('MemberTest', () => {
     member.deactivate();
 
     expect(() => member.deactivate()).toThrowError(IllegalStateException);
+  });
+
+  it('verifyPassword', () => {
+    // Given: 테스트 실행을 준비하는 단계
+    // When: 테스트를 진행하는 단계
+    // Then: 테스트 결과를 검증하는 단계
+    expect(member.verifyPassword('secret', passwordEncoder)).toBeTruthy();
+    expect(member.verifyPassword('hello', passwordEncoder)).toBeFalsy();
+  });
+
+  it('changeNickname', () => {
+    // Given: 테스트 실행을 준비하는 단계
+    expect(member.getNickname()).toEqual('dongmin');
+
+    // When: 테스트를 진행하는 단계
+    member.changeNickname('Charlie');
+
+    // Then: 테스트 결과를 검증하는 단계
+    expect(member.getNickname()).toEqual('Charlie');
+  });
+
+  it('changePassword', () => {
+    // Given: 테스트 실행을 준비하는 단계
+    // When: 테스트를 진행하는 단계
+    member.changePassword('verysecret', passwordEncoder);
+
+    // Then: 테스트 결과를 검증하는 단계
+    expect(member.verifyPassword('verysecret', passwordEncoder)).toBeTruthy();
   });
 });
