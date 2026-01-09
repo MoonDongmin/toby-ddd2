@@ -43,3 +43,5 @@ volumes:
       type: none
       o: bind
       device: ./init
+
+# 실행 명령어: docker compose -f docker/docker-compose.yml --env-file .env up -d

@@ -7,5 +7,6 @@ node_modules
 .env
 .DS_Store
 
-./docker/conf
-./docker/data
+**/docker/conf
+**/docker/data
+
