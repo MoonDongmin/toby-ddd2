@@ -1,4 +1,4 @@
-export class MemberCreateRequest {
+export class MemberRegisterRequest {
   email: string;
 
   nickname: string;

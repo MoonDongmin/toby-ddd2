@@ -2,26 +2,21 @@ import { Member } from '@/domain/member';
 import { MemberStatus } from '@/domain/member-status';
 import { IllegalStateException } from '@/common/exceptions/illegal-argument.exception';
 import { PasswordEncoder } from '@/domain/password-encoder';
-import { MemberCreateRequest } from '@/domain/member-create.request';
+import {
+  createMemberRegisterRequest,
+  createPasswordEncoder,
+} from './member-fixture';
 
 describe('MemberTest', () => {
   let member: Member;
   let passwordEncoder: PasswordEncoder;
 
   beforeEach(() => {
-    passwordEncoder = {
-      encode: (password: string) => password.toUpperCase(),
-      matches: (password: string, passwordHash: string) =>
-        passwordEncoder.encode(password) === passwordHash,
-    };
-
-    member = Member.create(
-      new MemberCreateRequest('dongmin@test.com', 'dongmin', 'secret'),
-      passwordEncoder,
-    );
+    passwordEncoder = createPasswordEncoder();
+    member = Member.register(createMemberRegisterRequest(), passwordEncoder);
   });
 
-  it('createMember', () => {
+  it('registerMember', () => {
     // Then: 테스트 결과를 검증하는 단계
     expect(member.getStatus()).toEqual(MemberStatus.PENDING);
   });
@@ -113,15 +108,12 @@ describe('MemberTest', () => {
   it('invalidEmail', () => {
     // Given: 테스트 실행을 준비하는 단계
     expect(() =>
-      Member.create(
-        new MemberCreateRequest('invalid email', 'dongmin', 'secret'),
+      Member.register(
+        createMemberRegisterRequest('invalid email'),
         passwordEncoder,
       ),
     ).toThrowError();
 
-    Member.create(
-      new MemberCreateRequest('dolor@gmail.com', 'dongmin', 'secret'),
-      passwordEncoder,
-    );
+    Member.register(createMemberRegisterRequest(), passwordEncoder);
   });
 });

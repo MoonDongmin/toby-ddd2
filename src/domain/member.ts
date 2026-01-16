@@ -2,22 +2,41 @@ import { MemberStatus } from '@/domain/member-status';
 import { Assert } from '@/common/util/assert';
 import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
 import { PasswordEncoder } from '@/domain/password-encoder';
-import { MemberCreateRequest } from '@/domain/member-create.request';
+import { MemberRegisterRequest } from '@/domain/member-register.request';
 import { Email } from '@/domain/email';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Member {
-  private email: NonNullable<Email>;
+  @PrimaryGeneratedColumn()
+  private id: number;
 
-  private nickname: NonNullable<string>;
+  @Column({
+    type: 'varchar',
+    transformer: {
+      to: (email: Email) => (email ? email.getAddress() : null),
+      from: (email: string) => (email ? new Email(email) : null),
+    },
+  })
+  private email: Email;
 
-  private passwordHash: NonNullable<string>;
+  @Column()
+  private nickname: string;
 
+  @Column()
+  private passwordHash: string;
+
+  @Column({
+    type: 'enum',
+    enum: MemberStatus,
+    default: MemberStatus.PENDING,
+  })
   private status: MemberStatus;
 
   private constructor() {}
 
-  public static create(
-    createRequest: MemberCreateRequest,
+  public static register(
+    createRequest: MemberRegisterRequest,
     passwordEncoder: PasswordEncoder,
   ): Member {
     if (
@@ -92,5 +111,9 @@ export class Member {
 
   public getStatus(): MemberStatus {
     return this.status;
+  }
+
+  public getId(): number {
+    return this.id;
   }
 }
