@@ -2,6 +2,7 @@ import { Member } from '@/domain/member';
 import { MemberStatus } from '@/domain/member-status';
 import { IllegalStateException } from '@/common/exceptions/illegal-argument.exception';
 import { PasswordEncoder } from '@/domain/password-encoder';
+import { MemberCreateRequest } from '@/domain/member-create.request';
 
 describe('MemberTest', () => {
   let member: Member;
@@ -15,9 +16,7 @@ describe('MemberTest', () => {
     };
 
     member = Member.create(
-      'dongmin@test.com',
-      'dongmin',
-      'secret',
+      new MemberCreateRequest('dongmin@test.com', 'dongmin', 'secret'),
       passwordEncoder,
     );
   });
@@ -97,5 +96,32 @@ describe('MemberTest', () => {
 
     // Then: 테스트 결과를 검증하는 단계
     expect(member.verifyPassword('verysecret', passwordEncoder)).toBeTruthy();
+  });
+
+  it('isActive', () => {
+    expect(member.isActive()).toBeFalsy();
+
+    member.activate();
+
+    expect(member.isActive()).toBeTruthy();
+
+    member.deactivate();
+
+    expect(member.isActive()).toBeFalsy();
+  });
+
+  it('invalidEmail', () => {
+    // Given: 테스트 실행을 준비하는 단계
+    expect(() =>
+      Member.create(
+        new MemberCreateRequest('invalid email', 'dongmin', 'secret'),
+        passwordEncoder,
+      ),
+    ).toThrowError();
+
+    Member.create(
+      new MemberCreateRequest('dolor@gmail.com', 'dongmin', 'secret'),
+      passwordEncoder,
+    );
   });
 });
