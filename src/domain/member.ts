@@ -117,4 +117,8 @@ export class Member {
   public getId(): number {
     return this.id;
   }
+
+  public setId(id: number) {
+    this.id = id;
+  }
 }
