@@ -17,6 +17,7 @@ export class Member {
       to: (email: Email) => (email ? email.getAddress() : null),
       from: (email: string) => (email ? new Email(email) : null),
     },
+    unique: true,
   })
   private email: Email;
 
