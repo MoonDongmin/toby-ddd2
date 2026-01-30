@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Member } from '@/domain/member';
+import { MemberModule } from '@/application/member.module';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { Member } from '@/domain/member';
       dropSchema: true,
     }),
     TypeOrmModule.forFeature([Member]),
-    // MemberModule,
+    MemberModule,
   ],
   controllers: [],
   providers: [],

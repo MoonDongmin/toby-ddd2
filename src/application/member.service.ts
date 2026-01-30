@@ -4,18 +4,18 @@ import { Member } from '@/domain/member';
 import { Inject, Injectable } from '@nestjs/common';
 import { type EmailSender } from '@/application/required/email-sender';
 import { type PasswordEncoder } from '@/domain/password-encoder';
-import { type MemberRepository } from '@/application/required/member.repository';
+import { type MemberRepository } from '@/application/required/member-repository';
 import { Email } from '@/domain/email';
 import { DuplicateEmailException } from '@/domain/duplicate-email.exception';
 
 @Injectable()
 export class MemberService implements MemberRegister {
   constructor(
-    @Inject('MemberRepository')
+    @Inject('MEMBER_REPOSITORY')
     private readonly memberRepository: MemberRepository,
-    @Inject('EmailSender')
+    @Inject('EMAIL_SENDER')
     private readonly emailSender: EmailSender,
-    @Inject('PasswordEncoder')
+    @Inject('PASSWORD_ENCODER')
     private readonly passwordEncoder: PasswordEncoder,
   ) {}
 
@@ -47,10 +47,9 @@ export class MemberService implements MemberRegister {
   private async checkDuplicateEmail(
     memberRegisterRequest: MemberRegisterRequest,
   ) {
-    const memberExist: Member | undefined =
-      await this.memberRepository.findByEmail(
-        new Email(memberRegisterRequest.email),
-      );
+    const memberExist: Member | null = await this.memberRepository.findByEmail(
+      new Email(memberRegisterRequest.email),
+    );
 
     if (memberExist) {
       throw new DuplicateEmailException(

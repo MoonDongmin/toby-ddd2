@@ -5,7 +5,7 @@ import {
   createMemberRegisterRequest,
   createPasswordEncoder,
 } from '../../domain/member-fixture';
-import { MemberRepository } from '@/application/required/member.repository';
+import { MemberRepository } from '@/application/required/member-repository';
 import { EmailSender } from '@/application/required/email-sender';
 import { Email } from '@/domain/email';
 import { MemberStatus } from '@/domain/member-status';
@@ -88,8 +88,8 @@ class MemberRepositoryStub implements MemberRepository {
     return member;
   }
 
-  async findByEmail(email: Email): Promise<Member | undefined> {
-    return undefined;
+  async findByEmail(email: Email): Promise<Member | null> {
+    return null;
   }
 }
 

@@ -6,8 +6,8 @@ import {
 } from '../../domain/member-fixture';
 import { AppModule } from '@/app.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { INestApplication } from '@nestjs/common';
-import { type MemberRepository } from '@/application/required/member.repository';
+import { INestApplication }      from '@nestjs/common';
+import { type MemberRepository } from '@/application/required/member-repository';
 
 describe('MemberRepositoryTest', () => {
   let app: INestApplication;
@@ -16,7 +16,12 @@ describe('MemberRepositoryTest', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider('EMAIL_SENDER')
+      .useValue({})
+      .overrideProvider('PASSWORD_ENCODER')
+      .useValue({})
+      .compile();
 
     app = moduleFixture.createNestApplication();
     memberRepository = moduleFixture.get<MemberRepository>(

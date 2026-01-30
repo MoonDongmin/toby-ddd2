@@ -7,52 +7,34 @@ import { createMemberRegisterRequest } from '../../domain/member-fixture';
 import { MemberStatus } from '@/domain/member-status';
 import { SplearnTestConfiguration } from '../../../splearn-test-configuration';
 import { DuplicateEmailException } from '@/domain/duplicate-email.exception';
+import { DataSource } from 'typeorm';
 
 describe('Member Service Test', () => {
   let app: INestApplication;
   const config = new SplearnTestConfiguration();
   let memberRegister: MemberService;
+  let dataSource: DataSource;
 
   beforeAll(async () => {
-    await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-      providers: [
-        MemberService,
-        {
-          provide: 'EmailSender',
-          useValue: config.emailSender(),
-        },
-        {
-          provide: 'PasswordEncoder',
-          useValue: config.passwordEncoder(),
-        },
-        {
-          provide: 'MemberRepository',
-          useValue: config.memberRepository(),
-        },
-        // {
-        //   provide: 'MemberRepository',
-        //   useFactory: (dataSource: DataSource) => {
-        //     return dataSource.getRepository(Member);
-        //   },
-        //   inject: [getDataSourceToken()],
-        // },
-      ],
-    }).compile();
+    })
+      .overrideProvider('EMAIL_SENDER')
+      .useValue(config.emailSender())
+      .overrideProvider('PASSWORD_ENCODER')
+      .useValue(config.passwordEncoder())
+      .compile();
 
     app = moduleFixture.createNestApplication();
 
     memberRegister = moduleFixture.get<MemberService>(MemberService);
+    dataSource = moduleFixture.get<DataSource>(DataSource);
 
     await app.init();
   });
 
-  beforeEach(() => {
-    config.resetMemberRepository();
+  beforeEach(async () => {
+    await dataSource.synchronize(true);
   });
 
   it('register', async () => {
@@ -65,6 +47,7 @@ describe('Member Service Test', () => {
   });
 
   it('duplicateEmailFail', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const member: Member = await memberRegister.register(
       createMemberRegisterRequest(),
     );

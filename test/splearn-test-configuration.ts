@@ -34,7 +34,6 @@ export class SplearnTestConfiguration {
     };
   }
 
-  // 테스트 간 상태 초기화용
   resetMemberRepository() {
     this.savedMembers.clear();
     this.idCounter = 1;
