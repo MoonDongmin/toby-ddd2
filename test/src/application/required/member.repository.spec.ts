@@ -22,6 +22,7 @@ describe('MemberRepositoryTest', () => {
     memberRepository = moduleFixture.get<MemberRepository>(
       getRepositoryToken(Member),
     );
+
     await app.init();
   });
 
