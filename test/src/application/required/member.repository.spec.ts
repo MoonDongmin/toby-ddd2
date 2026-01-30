@@ -6,7 +6,7 @@ import {
 } from '../../domain/member-fixture';
 import { AppModule } from '@/app.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { INestApplication }      from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { type MemberRepository } from '@/application/required/member-repository';
 
 describe('MemberRepositoryTest', () => {

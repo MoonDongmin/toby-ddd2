@@ -1,8 +1,15 @@
+import { IsEmail, IsString, Length } from 'class-validator';
+
 export class MemberRegisterRequest {
+  @IsEmail()
   email: string;
 
+  @IsString()
+  @Length(5, 20)
   nickname: string;
 
+  @IsString()
+  @Length(8, 100)
   password: string;
 
   constructor(email: string, nickname: string, password: string) {
