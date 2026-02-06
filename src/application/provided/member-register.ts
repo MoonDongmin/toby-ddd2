@@ -8,4 +8,4 @@ export interface MemberRegister {
   register(memberRegisterRequest: MemberRegisterRequest): Promise<Member>;
 }
 
-export const MEMBER_REGISTER = Symbol('MemberRegister');
+export const MEMBER_REGISTER: symbol = Symbol('MemberRegister');

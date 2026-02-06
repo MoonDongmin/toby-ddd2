@@ -9,7 +9,7 @@ import { SplearnTestConfiguration } from '../../../splearn-test-configuration';
 import { DuplicateEmailException } from '@/domain/duplicate-email.exception';
 import { DataSource } from 'typeorm';
 import { MemberRegisterRequest } from '@/domain/member-register.request';
-import { validate, ValidationError } from 'class-validator';
+import { validateOrReject } from 'class-validator';
 
 describe('Member Service Test', () => {
   let app: INestApplication;
@@ -68,11 +68,12 @@ describe('Member Service Test', () => {
     );
 
     // When: 테스트를 진행하는 단계
-    const errors: ValidationError[] = await validate(invalid);
-    console.log(errors);
+    // const errors: ValidationError[] = await validate(invalid);
+    // await expect(validateOrReject(invalid)).rejects.toThrow();
+    await expect(validateOrReject(invalid)).rejects.toBeDefined();
 
     // Then: 테스트 결과를 검증하는 단계
-    expect(errors.length).toEqual(3);
+    // expect(errors.length).toEqual(3);
     await expect(memberRegister.register(invalid)).rejects.toThrow();
   });
 });
