@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1770349803245" clover="3.2.0">
+  <project timestamp="1770349803245" name="All files">
+    <metrics statements="149" coveredstatements="136" conditionals="36" coveredconditionals="25" methods="38" coveredmethods="34" elements="223" coveredelements="195" complexity="0" loc="149" ncloc="149" packages="9" files="19" classes="19"/>
+    <package name="src">
+      <metrics statements="13" coveredstatements="6" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="app.module.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/app.module.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+      </file>
+      <file name="main.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/main.ts">
+        <metrics statements="7" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="18" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.adapter.integration">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="dummy-email-sender.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/adapter/integration/dummy-email-sender.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.adapter.persistence">
+      <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="5" methods="4" coveredmethods="4"/>
+      <file name="member-repository-impl.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/adapter/persistence/member-repository-impl.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="5" methods="4" coveredmethods="4"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="12" count="4" type="cond" truecount="3" falsecount="1"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="24" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="36" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.application">
+      <metrics statements="45" coveredstatements="45" conditionals="2" coveredconditionals="2" methods="7" coveredmethods="7"/>
+      <file name="member-modify.service.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/application/member-modify.service.ts">
+        <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="5" coveredmethods="5"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="40" count="6" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+        <line num="49" count="4" type="stmt"/>
+        <line num="51" count="4" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="63" count="4" type="stmt"/>
+        <line num="73" count="6" type="stmt"/>
+        <line num="77" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="78" count="1" type="stmt"/>
+      </file>
+      <file name="member-query.service.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/application/member-query.service.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="14" count="8" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+      </file>
+      <file name="member.module.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/application/member.module.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.application.provided">
+      <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="member-finder.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/application/provided/member-finder.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="10" count="4" type="stmt"/>
+      </file>
+      <file name="member-register.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/application/provided/member-register.ts">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="13" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.application.required">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="email-sender.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/application/required/email-sender.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="10" count="4" type="stmt"/>
+      </file>
+      <file name="member-repository.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/application/required/member-repository.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="15" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.exceptions">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="illegal-argument.exception.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/common/exceptions/illegal-argument.exception.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.util">
+      <metrics statements="6" coveredstatements="4" conditionals="4" coveredconditionals="1" methods="2" coveredmethods="1"/>
+      <file name="assert.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/common/util/assert.ts">
+        <metrics statements="6" coveredstatements="4" conditionals="4" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="5" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="14" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="15" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.domain">
+      <metrics statements="58" coveredstatements="55" conditionals="22" coveredconditionals="17" methods="21" coveredmethods="19"/>
+      <file name="duplicate-email.exception.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/domain/duplicate-email.exception.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+      </file>
+      <file name="email.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/domain/email.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="10" count="32" type="cond" truecount="1" falsecount="0"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="16" count="30" type="stmt"/>
+        <line num="20" count="19" type="stmt"/>
+      </file>
+      <file name="member-register.request.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/domain/member-register.request.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="16" count="21" type="stmt"/>
+        <line num="17" count="21" type="stmt"/>
+        <line num="18" count="21" type="stmt"/>
+      </file>
+      <file name="member-status.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/domain/member-status.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+      </file>
+      <file name="member.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/domain/member.ts">
+        <metrics statements="35" coveredstatements="32" conditionals="19" coveredconditionals="14" methods="16" coveredmethods="14"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="17" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="5" type="cond" truecount="3" falsecount="1"/>
+        <line num="25" count="5" type="stmt"/>
+        <line num="28" count="5" type="stmt"/>
+        <line num="35" count="5" type="cond" truecount="3" falsecount="1"/>
+        <line num="43" count="19" type="cond" truecount="0" falsecount="1"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="53" count="19" type="stmt"/>
+        <line num="55" count="19" type="stmt"/>
+        <line num="56" count="18" type="stmt"/>
+        <line num="57" count="18" type="stmt"/>
+        <line num="59" count="18" type="stmt"/>
+        <line num="61" count="18" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+        <line num="70" count="6" type="stmt"/>
+        <line num="74" count="5" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+        <line num="83" count="3" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="98" count="3" type="stmt"/>
+        <line num="102" count="4" type="stmt"/>
+        <line num="106" count="2" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="114" count="5" type="stmt"/>
+        <line num="118" count="7" type="stmt"/>
+        <line num="122" count="0" type="stmt"/>
+      </file>
+      <file name="password-encoder.ts" path="/Users/moon/Developments/graduate-school/toby-ddd2/src/domain/password-encoder.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="4" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

@@ -14,7 +14,7 @@ import { EMAIL_SENDER } from '@/application/required/email-sender';
 import { PASSWORD_ENCODER } from '@/domain/password-encoder';
 import { MemberRegister } from '@/application/provided/member-register';
 
-describe('Member Service Test', () => {
+describe('Member Register Test', () => {
   let app: INestApplication;
   let memberRegister: MemberRegister;
   let dataSource: DataSource;
@@ -79,7 +79,7 @@ describe('Member Service Test', () => {
 
   it('memberRegisterRequestFail', async () => {
     // Given: 테스트 실행을 준비하는 단계
-    const invalid = new MemberRegisterRequest(
+    const checkValidation: MemberRegisterRequest = new MemberRegisterRequest(
       'cook1008gmail.com',
       'dong',
       'long',
@@ -88,10 +88,10 @@ describe('Member Service Test', () => {
     // When: 테스트를 진행하는 단계
     // const errors: ValidationError[] = await validate(invalid);
     // await expect(validateOrReject(invalid)).rejects.toThrow();
-    await expect(validateOrReject(invalid)).rejects.toBeDefined();
+    await expect(validateOrReject(checkValidation)).rejects.toBeDefined();
 
     // Then: 테스트 결과를 검증하는 단계
     // expect(errors.length).toEqual(3);
-    await expect(memberRegister.register(invalid)).rejects.toThrow();
+    await expect(memberRegister.register(checkValidation)).rejects.toThrow();
   });
 });
