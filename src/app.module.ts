@@ -18,7 +18,7 @@ import { MemberModule } from '@/application/member.module';
       database: process.env.POSTGRES_DB,
       entities: [Member],
       synchronize: true,
-      dropSchema: true,
+      // dropSchema: true,
     }),
     TypeOrmModule.forFeature([Member]),
     MemberModule,

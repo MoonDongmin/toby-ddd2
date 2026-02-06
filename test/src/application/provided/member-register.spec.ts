@@ -11,7 +11,6 @@ import { DataSource } from 'typeorm';
 import { MemberRegisterRequest } from '@/domain/member-register.request';
 import { validateOrReject } from 'class-validator';
 import { EMAIL_SENDER } from '@/application/required/email-sender';
-import { PASSWORD_ENCODER } from '@/domain/password-encoder';
 import { MemberRegister } from '@/application/provided/member-register';
 
 describe('Member Register Test', () => {
@@ -27,8 +26,6 @@ describe('Member Register Test', () => {
     })
       .overrideProvider(EMAIL_SENDER)
       .useValue(config.emailSender())
-      .overrideProvider(PASSWORD_ENCODER)
-      .useValue(config.passwordEncoder())
       .compile();
 
     app = moduleFixture.createNestApplication();

@@ -13,24 +13,35 @@ export class Member {
 
   @Column({
     type: 'varchar',
+    name: 'email_address',
     transformer: {
       to: (email: Email) => (email ? email.getAddress() : null),
       from: (email: string) => (email ? new Email(email) : null),
     },
     unique: true,
+    length: 150,
+    nullable: false,
   })
   private email: Email;
 
-  @Column()
+  @Column({
+    length: 100,
+    nullable: false,
+  })
   private nickname: string;
 
-  @Column()
+  @Column({
+    name: 'password_hash',
+    length: 200,
+    nullable: false,
+  })
   private passwordHash: string;
 
   @Column({
     type: 'enum',
     enum: MemberStatus,
     default: MemberStatus.PENDING,
+    nullable: false,
   })
   private status: MemberStatus;
 

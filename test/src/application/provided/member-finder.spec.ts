@@ -5,7 +5,6 @@ import { DataSource } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@/app.module';
 import { EMAIL_SENDER } from '@/application/required/email-sender';
-import { PASSWORD_ENCODER } from '@/domain/password-encoder';
 import { MemberRegister } from '@/application/provided/member-register';
 import { MemberFinder } from '@/application/provided/member-finder';
 import { Member } from '@/domain/member';
@@ -26,8 +25,6 @@ describe('MemberFinderTest', () => {
     })
       .overrideProvider(EMAIL_SENDER)
       .useValue(config.emailSender())
-      .overrideProvider(PASSWORD_ENCODER)
-      .useValue(config.passwordEncoder())
       .compile();
 
     app = moduleFixture.createNestApplication();

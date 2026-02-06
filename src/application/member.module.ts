@@ -8,6 +8,7 @@ import { EMAIL_SENDER } from '@/application/required/email-sender';
 import { PASSWORD_ENCODER } from '@/domain/password-encoder';
 import { MemberQueryService } from '@/application/member-query.service';
 import { MEMBER_FINDER } from '@/application/provided/member-finder';
+import { SecurePasswordEncoder } from '@/adapter/security/secure-password-encoder';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Member])],
@@ -30,6 +31,10 @@ import { MEMBER_FINDER } from '@/application/provided/member-finder';
     {
       provide: MEMBER_FINDER,
       useClass: MemberQueryService,
+    },
+    {
+      provide: PASSWORD_ENCODER,
+      useClass: SecurePasswordEncoder,
     },
   ],
 })

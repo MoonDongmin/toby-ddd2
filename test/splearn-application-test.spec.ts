@@ -8,7 +8,6 @@ import { MemberFinder } from '@/application/provided/member-finder';
 import { DataSource } from 'typeorm';
 import { SplearnTestConfiguration } from './splearn-test-configuration';
 import { EMAIL_SENDER } from '@/application/required/email-sender';
-import { PASSWORD_ENCODER } from '@/domain/password-encoder';
 
 describe('Application Bootstrap (e2e)', () => {
   let app: INestApplication;
@@ -24,8 +23,6 @@ describe('Application Bootstrap (e2e)', () => {
     })
       .overrideProvider(EMAIL_SENDER)
       .useValue(config.emailSender())
-      .overrideProvider(PASSWORD_ENCODER)
-      .useValue(config.passwordEncoder())
       .compile();
 
     app = moduleFixture.createNestApplication();
