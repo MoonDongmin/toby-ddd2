@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { MemberService } from '@/application/member.service';
+import { MemberModifyService } from '@/application/member-modify.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@/app.module';
 import { Member } from '@/domain/member';
@@ -10,26 +10,31 @@ import { DuplicateEmailException } from '@/domain/duplicate-email.exception';
 import { DataSource } from 'typeorm';
 import { MemberRegisterRequest } from '@/domain/member-register.request';
 import { validateOrReject } from 'class-validator';
+import { EMAIL_SENDER } from '@/application/required/email-sender';
+import { PASSWORD_ENCODER } from '@/domain/password-encoder';
+import { MemberRegister } from '@/application/provided/member-register';
 
 describe('Member Service Test', () => {
   let app: INestApplication;
-  const config = new SplearnTestConfiguration();
-  let memberRegister: MemberService;
+  let memberRegister: MemberRegister;
   let dataSource: DataSource;
+
+  const config = new SplearnTestConfiguration();
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
-      .overrideProvider('EMAIL_SENDER')
+      .overrideProvider(EMAIL_SENDER)
       .useValue(config.emailSender())
-      .overrideProvider('PASSWORD_ENCODER')
+      .overrideProvider(PASSWORD_ENCODER)
       .useValue(config.passwordEncoder())
       .compile();
 
     app = moduleFixture.createNestApplication();
 
-    memberRegister = moduleFixture.get<MemberService>(MemberService);
+    memberRegister =
+      moduleFixture.get<MemberModifyService>(MemberModifyService);
     dataSource = moduleFixture.get<DataSource>(DataSource);
 
     await app.init();
@@ -57,6 +62,19 @@ describe('Member Service Test', () => {
     await expect(
       memberRegister.register(createMemberRegisterRequest()),
     ).rejects.toThrow(DuplicateEmailException);
+  });
+
+  it('activate', async () => {
+    // Given: 테스트 실행을 준비하는 단계
+    let member: Member = await memberRegister.register(
+      createMemberRegisterRequest(),
+    );
+
+    // When: 테스트를 진행하는 단계
+    member = await memberRegister.activate(member.getId());
+
+    // Then: 테스트 결과를 검증하는 단계
+    expect(member.getStatus()).toBe(MemberStatus.ACTIVE);
   });
 
   it('memberRegisterRequestFail', async () => {

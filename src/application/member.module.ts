@@ -1,25 +1,35 @@
 import { Module } from '@nestjs/common';
-import { MemberService } from '@/application/member.service';
+import { MemberModifyService } from '@/application/member-modify.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Member } from '@/domain/member';
 import { MemberRepositoryImpl } from '@/adapter/persistence/member-repository-impl';
+import { MEMBER_REPOSITORY } from '@/application/required/member-repository';
+import { EMAIL_SENDER } from '@/application/required/email-sender';
+import { PASSWORD_ENCODER } from '@/domain/password-encoder';
+import { MemberQueryService } from '@/application/member-query.service';
+import { MEMBER_FINDER } from '@/application/provided/member-finder';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Member])],
-  exports: [MemberService],
+  exports: [MemberModifyService],
   providers: [
-    MemberService,
+    MemberModifyService,
+    MemberQueryService,
     {
-      provide: 'MEMBER_REPOSITORY',
+      provide: MEMBER_REPOSITORY,
       useClass: MemberRepositoryImpl,
     },
     {
-      provide: 'EMAIL_SENDER',
+      provide: EMAIL_SENDER,
       useValue: null,
     },
     {
-      provide: 'PASSWORD_ENCODER',
+      provide: PASSWORD_ENCODER,
       useValue: null,
+    },
+    {
+      provide: MEMBER_FINDER,
+      useClass: MemberQueryService,
     },
   ],
 })

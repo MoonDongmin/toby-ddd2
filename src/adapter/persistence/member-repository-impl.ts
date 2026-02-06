@@ -27,4 +27,16 @@ export class MemberRepositoryImpl implements MemberRepository {
 
     return existMember;
   }
+
+  async findById(memberId: number): Promise<Member | null> {
+    const existMember: Member | null = await this.memberRepository.findOneBy({
+      id: memberId,
+    } as any);
+
+    if (!existMember) {
+      return null;
+    }
+
+    return existMember;
+  }
 }

@@ -6,6 +6,8 @@ import { Member } from '@/domain/member';
  */
 export interface MemberRegister {
   register(memberRegisterRequest: MemberRegisterRequest): Promise<Member>;
+
+  activate(memberId: number): Promise<Member>;
 }
 
 export const MEMBER_REGISTER: symbol = Symbol('MemberRegister');
