@@ -1,11 +1,11 @@
-import { Member } from '@/domain/member';
+import { Member } from '@/domain/member/member';
 import { Inject, Injectable } from '@nestjs/common';
 import {
   MEMBER_REPOSITORY,
   type MemberRepository,
-} from '@/application/required/member-repository';
+} from '@/application/member/required/member-repository';
 import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
-import { MemberFinder } from '@/application/provided/member-finder';
+import { MemberFinder } from '@/application/member/provided/member-finder';
 
 @Injectable()
 export class MemberQueryService implements MemberFinder {

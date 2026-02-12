@@ -1,4 +1,4 @@
-import { Member } from '@/domain/member';
+import { Member } from '@/domain/member/member';
 
 /*
  회원을 조회한다

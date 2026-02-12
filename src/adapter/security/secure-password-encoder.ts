@@ -1,4 +1,4 @@
-import { PasswordEncoder } from '@/domain/password-encoder';
+import { PasswordEncoder } from '@/domain/member/password-encoder';
 import bcrypt from 'bcrypt';
 
 export class SecurePasswordEncoder implements PasswordEncoder {

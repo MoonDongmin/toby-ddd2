@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Member } from '@/domain/member';
-import { MemberModule } from '@/application/member.module';
+import { Member } from '@/domain/member/member';
+import { MemberModule } from '@/application/member/member.module';
+import { MemberDetail } from '@/domain/member/member-detail';
 
 @Module({
   imports: [
@@ -16,11 +17,11 @@ import { MemberModule } from '@/application/member.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Member],
+      entities: [Member, MemberDetail],
       synchronize: true,
       // dropSchema: true,
     }),
-    TypeOrmModule.forFeature([Member]),
+    TypeOrmModule.forFeature([Member, MemberDetail]),
     MemberModule,
   ],
   controllers: [],

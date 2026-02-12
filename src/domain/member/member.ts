@@ -1,9 +1,9 @@
-import { MemberStatus } from '@/domain/member-status';
+import { MemberStatus } from '@/domain/member/member-status';
 import { Assert } from '@/common/util/assert';
 import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
-import { PasswordEncoder } from '@/domain/password-encoder';
-import { MemberRegisterRequest } from '@/domain/member-register.request';
-import { Email } from '@/domain/email';
+import { PasswordEncoder } from '@/domain/member/password-encoder';
+import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { Email } from '@/domain/shared/email';
 import {
   Column,
   Entity,
@@ -11,7 +11,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { MemberDetail } from '@/domain/member-detail';
+import { MemberDetail } from '@/domain/member/member-detail';
+import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.request';
 
 @Entity()
 export class Member {
@@ -83,6 +84,8 @@ export class Member {
 
     member.status = MemberStatus.PENDING;
 
+    member.detail = MemberDetail.create();
+
     return member;
   }
 
@@ -93,12 +96,14 @@ export class Member {
     );
 
     this.status = MemberStatus.ACTIVE;
+    this.detail.activate();
   }
 
   public deactivate(): void {
     Assert.state(this.status === MemberStatus.ACTIVE, `ACTIVE 상태가 아닙니다`);
 
     this.status = MemberStatus.DEACTIVATED;
+    this.detail.deactivate();
   }
 
   public verifyPassword(
@@ -110,6 +115,12 @@ export class Member {
 
   public changeNickname(nickname: string) {
     this.nickname = nickname;
+  }
+
+  public updateInfo(updateRequest: MemberInfoUpdateRequest): void {
+    this.nickname = updateRequest.nickname!;
+
+    this.detail.updateInfo(updateRequest);
   }
 
   public changePassword(
@@ -145,5 +156,9 @@ export class Member {
 
   public setId(id: number) {
     this.id = id;
+  }
+
+  public getDetail(): MemberDetail {
+    return this.detail;
   }
 }

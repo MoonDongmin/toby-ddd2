@@ -1,15 +1,15 @@
 import { INestApplication } from '@nestjs/common';
-import { SplearnTestConfiguration } from '../../../splearn-test-configuration';
-import { MemberModifyService } from '@/application/member-modify.service';
+import { SplearnTestConfiguration } from '../../../../splearn-test-configuration';
+import { MemberModifyService } from '@/application/member/member-modify.service';
 import { DataSource } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@/app.module';
-import { EMAIL_SENDER } from '@/application/required/email-sender';
-import { MemberRegister } from '@/application/provided/member-register';
-import { MemberFinder } from '@/application/provided/member-finder';
-import { Member } from '@/domain/member';
-import { createMemberRegisterRequest } from '../../domain/member-fixture';
-import { MemberQueryService } from '@/application/member-query.service';
+import { EMAIL_SENDER } from '@/application/member/required/email-sender';
+import { MemberRegister } from '@/application/member/provided/member-register';
+import { MemberFinder } from '@/application/member/provided/member-finder';
+import { Member } from '@/domain/member/member';
+import { createMemberRegisterRequest } from '../../../domain/member/member-fixture';
+import { MemberQueryService } from '@/application/member/member-query.service';
 
 describe('MemberFinderTest', () => {
   let app: INestApplication;

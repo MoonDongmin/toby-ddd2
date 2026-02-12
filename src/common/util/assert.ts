@@ -7,6 +7,12 @@ export class Assert {
     }
   }
 
+  static isTrue(value: boolean, message: string): asserts value {
+    if (!value) {
+      throw new Error(message);
+    }
+  }
+
   static hasText(
     value: string | null | undefined,
     message: string,

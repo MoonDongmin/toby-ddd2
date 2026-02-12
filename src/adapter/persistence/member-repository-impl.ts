@@ -1,6 +1,6 @@
-import { MemberRepository } from '@/application/required/member-repository';
-import { Email } from '@/domain/email';
-import { Member } from '@/domain/member';
+import { MemberRepository } from '@/application/member/required/member-repository';
+import { Email } from '@/domain/shared/email';
+import { Member } from '@/domain/member/member';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';

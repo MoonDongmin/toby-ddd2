@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { MemberModifyService } from '@/application/member-modify.service';
+import { MemberModifyService } from '@/application/member/member-modify.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Member } from '@/domain/member';
+import { Member } from '@/domain/member/member';
 import { MemberRepositoryImpl } from '@/adapter/persistence/member-repository-impl';
-import { MEMBER_REPOSITORY } from '@/application/required/member-repository';
-import { EMAIL_SENDER } from '@/application/required/email-sender';
-import { PASSWORD_ENCODER } from '@/domain/password-encoder';
-import { MemberQueryService } from '@/application/member-query.service';
-import { MEMBER_FINDER } from '@/application/provided/member-finder';
+import { MEMBER_REPOSITORY } from '@/application/member/required/member-repository';
+import { EMAIL_SENDER } from '@/application/member/required/email-sender';
+import { PASSWORD_ENCODER } from '@/domain/member/password-encoder';
+import { MemberQueryService } from '@/application/member/member-query.service';
+import { MEMBER_FINDER } from '@/application/member/provided/member-finder';
 import { SecurePasswordEncoder } from '@/adapter/security/secure-password-encoder';
 
 @Module({

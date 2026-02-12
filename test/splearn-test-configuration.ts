@@ -1,7 +1,7 @@
-import { Email } from '@/domain/email';
-import { PasswordEncoder } from '@/domain/password-encoder';
-import { createPasswordEncoder } from './src/domain/member-fixture';
-import { Member } from '@/domain/member';
+import { Email } from '@/domain/shared/email';
+import { PasswordEncoder } from '@/domain/member/password-encoder';
+import { createPasswordEncoder } from './src/domain/member/member-fixture';
+import { Member } from '@/domain/member/member';
 
 export class SplearnTestConfiguration {
   private savedMembers: Map<string, Member> = new Map<string, Member>();

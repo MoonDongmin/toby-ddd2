@@ -1,4 +1,4 @@
-import { Email } from '@/domain/email';
+import { Email } from '@/domain/shared/email';
 
 describe('EmailTest', () => {
   it('equality', () => {

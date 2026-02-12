@@ -1,17 +1,17 @@
 import { INestApplication } from '@nestjs/common';
-import { MemberModifyService } from '@/application/member-modify.service';
+import { MemberModifyService } from '@/application/member/member-modify.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@/app.module';
-import { Member } from '@/domain/member';
-import { createMemberRegisterRequest } from '../../domain/member-fixture';
-import { MemberStatus } from '@/domain/member-status';
-import { SplearnTestConfiguration } from '../../../splearn-test-configuration';
-import { DuplicateEmailException } from '@/domain/duplicate-email.exception';
+import { Member } from '@/domain/member/member';
+import { createMemberRegisterRequest } from '../../../domain/member/member-fixture';
+import { MemberStatus } from '@/domain/member/member-status';
+import { SplearnTestConfiguration } from '../../../../splearn-test-configuration';
+import { DuplicateEmailException } from '@/domain/member/duplicate-email.exception';
 import { DataSource } from 'typeorm';
-import { MemberRegisterRequest } from '@/domain/member-register.request';
+import { MemberRegisterRequest } from '@/domain/member/member-register.request';
 import { validateOrReject } from 'class-validator';
-import { EMAIL_SENDER } from '@/application/required/email-sender';
-import { MemberRegister } from '@/application/provided/member-register';
+import { EMAIL_SENDER } from '@/application/member/required/email-sender';
+import { MemberRegister } from '@/application/member/provided/member-register';
 
 describe('Member Register Test', () => {
   let app: INestApplication;

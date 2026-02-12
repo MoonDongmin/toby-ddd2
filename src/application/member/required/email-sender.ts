@@ -1,4 +1,4 @@
-import { Email } from '@/domain/email';
+import { Email } from '@/domain/shared/email';
 
 /**
  * 이메일을 발송한다.

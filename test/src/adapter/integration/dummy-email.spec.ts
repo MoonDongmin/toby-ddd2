@@ -1,5 +1,5 @@
 import { DummyEmailSender } from '@/adapter/integration/dummy-email-sender';
-import { Email } from '@/domain/email';
+import { Email } from '@/domain/shared/email';
 
 describe('DummyEmailSenderTest', () => {
   it('dummyEmailSender', () => {

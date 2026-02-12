@@ -1,13 +1,13 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@/app.module';
-import { MemberModifyService } from '@/application/member-modify.service';
-import { MemberQueryService } from '@/application/member-query.service';
-import { MemberRegister } from '@/application/provided/member-register';
-import { MemberFinder } from '@/application/provided/member-finder';
+import { MemberModifyService } from '@/application/member/member-modify.service';
+import { MemberQueryService } from '@/application/member/member-query.service';
+import { MemberRegister } from '@/application/member/provided/member-register';
+import { MemberFinder } from '@/application/member/provided/member-finder';
 import { DataSource } from 'typeorm';
 import { SplearnTestConfiguration } from './splearn-test-configuration';
-import { EMAIL_SENDER } from '@/application/required/email-sender';
+import { EMAIL_SENDER } from '@/application/member/required/email-sender';
 
 describe('Application Bootstrap (e2e)', () => {
   let app: INestApplication;

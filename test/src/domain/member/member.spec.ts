@@ -1,11 +1,13 @@
-import { Member } from '@/domain/member';
-import { MemberStatus } from '@/domain/member-status';
+import { Member } from '@/domain/member/member';
+import { MemberStatus } from '@/domain/member/member-status';
 import { IllegalStateException } from '@/common/exceptions/illegal-argument.exception';
-import { PasswordEncoder } from '@/domain/password-encoder';
+import { PasswordEncoder } from '@/domain/member/password-encoder';
 import {
   createMemberRegisterRequest,
   createPasswordEncoder,
 } from './member-fixture';
+import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.request';
+import { Profile } from '@/domain/member/profile';
 
 describe('MemberTest', () => {
   let member: Member;
@@ -19,6 +21,7 @@ describe('MemberTest', () => {
   it('registerMember', () => {
     // Then: 테스트 결과를 검증하는 단계
     expect(member.getStatus()).toEqual(MemberStatus.PENDING);
+    expect(member.getDetail().getRegisteredAt()).toBeDefined();
   });
 
   // it('constructorNullCheck', () => {
@@ -30,10 +33,13 @@ describe('MemberTest', () => {
 
   it('activate', () => {
     // When: 테스트를 진행하는 단계
+    expect(member.getDetail().getActivatedAt()).toBeUndefined();
+
     member.activate();
 
     // Then: 테스트 결과를 검증하는 단계
     expect(member.getStatus()).toEqual(MemberStatus.ACTIVE);
+    expect(member.getDetail().getActivatedAt()).toBeDefined();
   });
 
   it('activateFail', () => {
@@ -52,6 +58,7 @@ describe('MemberTest', () => {
 
     // Then: 테스트 결과를 검증하는 단계
     expect(member.getStatus()).toEqual(MemberStatus.DEACTIVATED);
+    expect(member.getDetail().getDeactivatedAt()).toBeDefined();
   });
 
   it('deactivateFail', () => {
@@ -115,5 +122,32 @@ describe('MemberTest', () => {
     ).toThrowError();
 
     Member.register(createMemberRegisterRequest(), passwordEncoder);
+  });
+
+  it('updateInfo', () => {
+    // Given: 테스트 실행을 준비하는 단계
+    member.activate();
+    const request: MemberInfoUpdateRequest = new MemberInfoUpdateRequest(
+      'Leo',
+      'dongmin100',
+      '자기소개',
+    );
+    // When: 테스트를 진행하는 단계
+    member.updateInfo(request);
+
+    // Then: 테스트 결과를 검증하는 단계
+    expect(member.getNickname()).toEqual(request.nickname);
+    expect(member.getDetail().getProfile().getAddress()).toEqual(
+      request.profileAddress,
+    );
+    expect(member.getDetail().getIntroduction()).toEqual(request.introduction);
+  });
+
+  it('url ', () => {
+    // Given: 테스트 실행을 준비하는 단계
+    const profile: Profile = new Profile('dongmin');
+
+    // Then: 테스트 결과를 검증하는 단계
+    expect(profile.url()).toEqual('@dongmin');
   });
 });
