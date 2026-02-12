@@ -4,7 +4,14 @@ import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.e
 import { PasswordEncoder } from '@/domain/password-encoder';
 import { MemberRegisterRequest } from '@/domain/member-register.request';
 import { Email } from '@/domain/email';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { MemberDetail } from '@/domain/member-detail';
 
 @Entity()
 export class Member {
@@ -44,6 +51,13 @@ export class Member {
     nullable: false,
   })
   private status: MemberStatus;
+
+  @OneToOne(() => MemberDetail, {
+    cascade: ['insert', 'update', 'remove'],
+    eager: true,
+  })
+  @JoinColumn({ name: 'detail_id' })
+  private detail: MemberDetail;
 
   private constructor() {}
 
