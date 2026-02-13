@@ -1,5 +1,6 @@
 import { MemberRegisterRequest } from '@/domain/member/member-register.request';
 import { PasswordEncoder } from '@/domain/member/password-encoder';
+import { Member } from '@/domain/member/member';
 
 export function createPasswordEncoder(): PasswordEncoder {
   return {
@@ -14,9 +15,27 @@ export function createPasswordEncoder(): PasswordEncoder {
 }
 
 export function createMemberRegisterRequest(email?: string) {
-  if (email) {
-    return new MemberRegisterRequest(email, 'dongmin', 'secret');
+  return new MemberRegisterRequest(
+    email ? email : 'dongmin@naver.com',
+    'Dongmin',
+    'secret',
+  );
+}
+
+export function createMember(id?: number): Member {
+  if (id) {
+    const member: Member = Member.register(
+      createMemberRegisterRequest(),
+      createPasswordEncoder(),
+    );
+
+    member.setId(id);
+
+    return member;
   }
 
-  return new MemberRegisterRequest('dongmin@test.com', 'dongmin', 'secret');
+  return Member.register(
+    createMemberRegisterRequest(),
+    createPasswordEncoder(),
+  );
 }

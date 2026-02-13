@@ -9,7 +9,7 @@ export class MemberRegisterRequest {
   nickname: string;
 
   @IsString()
-  @Length(8, 100)
+  @Length(6, 100)
   password: string;
 
   constructor(email: string, nickname: string, password: string) {

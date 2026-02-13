@@ -9,9 +9,12 @@ import { PASSWORD_ENCODER } from '@/domain/member/password-encoder';
 import { MemberQueryService } from '@/application/member/member-query.service';
 import { MEMBER_FINDER } from '@/application/member/provided/member-finder';
 import { SecurePasswordEncoder } from '@/adapter/security/secure-password-encoder';
+import { MemberController } from '@/adapter/webapi/member.controller';
+import { MEMBER_REGISTER } from '@/application/member/provided/member-register';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Member])],
+  controllers: [MemberController],
   exports: [MemberModifyService],
   providers: [
     MemberModifyService,
@@ -35,6 +38,10 @@ import { SecurePasswordEncoder } from '@/adapter/security/secure-password-encode
     {
       provide: PASSWORD_ENCODER,
       useClass: SecurePasswordEncoder,
+    },
+    {
+      provide: MEMBER_REGISTER,
+      useClass: MemberModifyService,
     },
   ],
 })

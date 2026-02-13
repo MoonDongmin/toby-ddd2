@@ -139,6 +139,7 @@ describe('Member Register Test', () => {
         new MemberInfoUpdateRequest('James', 'dongmin100', 'Introduction'),
       ),
     ).rejects.toThrow(DuplicateProfileException);
+
     // 다른 프로필 주소로는 변경 가능
     await memberRegister.updateInfo(
       member2.getId(),
