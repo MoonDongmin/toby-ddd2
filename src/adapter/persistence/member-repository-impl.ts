@@ -4,6 +4,7 @@ import { Member } from '@/domain/member/member';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { Profile } from '@/domain/member/profile';
 
 @Injectable()
 export class MemberRepositoryImpl implements MemberRepository {
@@ -11,7 +12,6 @@ export class MemberRepositoryImpl implements MemberRepository {
     @InjectRepository(Member)
     private readonly memberRepository: Repository<Member>,
   ) {}
-
   async save(member: Member): Promise<Member> {
     return this.memberRepository.save(member);
   }
@@ -38,5 +38,15 @@ export class MemberRepositoryImpl implements MemberRepository {
     }
 
     return existMember;
+  }
+
+  async findByProfile(profile: Profile): Promise<Member | null> {
+    return this.memberRepository
+      .createQueryBuilder('member')
+      .leftJoinAndSelect('member.detail', 'detail')
+      .where('detail.profile_address = :address', {
+        address: profile.getAddress(),
+      })
+      .getOne();
   }
 }

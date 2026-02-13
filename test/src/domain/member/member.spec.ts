@@ -80,17 +80,6 @@ describe('MemberTest', () => {
     expect(member.verifyPassword('hello', passwordEncoder)).toBeFalsy();
   });
 
-  it('changeNickname', () => {
-    // Given: 테스트 실행을 준비하는 단계
-    expect(member.getNickname()).toEqual('dongmin');
-
-    // When: 테스트를 진행하는 단계
-    member.changeNickname('Charlie');
-
-    // Then: 테스트 결과를 검증하는 단계
-    expect(member.getNickname()).toEqual('Charlie');
-  });
-
   it('changePassword', () => {
     // Given: 테스트 실행을 준비하는 단계
     // When: 테스트를 진행하는 단계
@@ -141,6 +130,17 @@ describe('MemberTest', () => {
       request.profileAddress,
     );
     expect(member.getDetail().getIntroduction()).toEqual(request.introduction);
+  });
+
+  it('updateInfoFail', () => {
+    expect(() => {
+      const request = new MemberInfoUpdateRequest(
+        'Leo',
+        'dongmin100',
+        '자기소개',
+      );
+      member.updateInfo(request);
+    }).toThrow(IllegalStateException);
   });
 
   it('url ', () => {

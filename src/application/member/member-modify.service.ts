@@ -21,6 +21,8 @@ import {
   type MemberFinder,
 } from '@/application/member/provided/member-finder';
 import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.request';
+import { Profile } from '@/domain/member/profile';
+import { DuplicateProfileException } from '@/domain/member/duplicate-profile.exception';
 
 @Injectable()
 export class MemberModifyService implements MemberRegister {
@@ -34,6 +36,7 @@ export class MemberModifyService implements MemberRegister {
     @Inject(MEMBER_FINDER)
     private readonly memberFinder: MemberFinder,
   ) {}
+
   async register(
     memberRegisterRequest: MemberRegisterRequest,
   ): Promise<Member> {
@@ -49,6 +52,7 @@ export class MemberModifyService implements MemberRegister {
     this.sendWelcomeEmail(member);
     return member;
   }
+
   async activate(memberId: number): Promise<Member> {
     const member: Member | null = await this.memberFinder.find(memberId);
 
@@ -71,9 +75,37 @@ export class MemberModifyService implements MemberRegister {
   ): Promise<Member> {
     const member: Member | null = await this.memberFinder.find(memberId);
 
+    await this.checkDuplicateProfile(
+      member,
+      memberInfoUpdateRequest.profileAddress,
+    );
+
     member.updateInfo(memberInfoUpdateRequest);
 
     return this.memberRepository.save(member);
+  }
+
+  private async checkDuplicateProfile(
+    member: Member,
+    profileAddress: string,
+  ): Promise<void> {
+    if (!profileAddress) return;
+
+    const currentProfile: Profile = member.getDetail().getProfile();
+
+    if (
+      currentProfile !== null &&
+      member.getDetail().getProfile().getAddress() === profileAddress
+    )
+      return;
+
+    if (
+      await this.memberRepository.findByProfile(new Profile(profileAddress))
+    ) {
+      throw new DuplicateProfileException(
+        '이미 존재하는 프로필 주소입니다: ' + profileAddress,
+      );
+    }
   }
 
   private sendWelcomeEmail(member: Member) {

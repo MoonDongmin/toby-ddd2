@@ -7,7 +7,7 @@ export class Profile {
   constructor(address: string) {
     if (
       address === null ||
-      (address.length >= 0 && !Profile.PROFILE_ADDRESS_PATTERN.test(address))
+      (address.length > 0 && !Profile.PROFILE_ADDRESS_PATTERN.test(address))
     ) {
       throw new IllegalArgumentException(
         '프로필 주소 형식이 바르지 않습니다: ' + address,
