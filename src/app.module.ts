@@ -1,10 +1,11 @@
 import { Module, ValidationPipe } from '@nestjs/common';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Member } from '@/domain/member/member';
 import { MemberModule } from '@/application/member/member.module';
 import { MemberDetail } from '@/domain/member/member-detail';
+import { ApiControllerAdvice } from '@/adapter/api-controller-advice';
 
 @Module({
   imports: [
@@ -34,6 +35,10 @@ import { MemberDetail } from '@/domain/member/member-detail';
         forbidNonWhitelisted: true,
         transform: true,
       }),
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ApiControllerAdvice,
     },
   ],
 })

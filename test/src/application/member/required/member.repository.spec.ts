@@ -13,10 +13,12 @@ import {
 import { MemberStatus } from '@/domain/member/member-status';
 import { EMAIL_SENDER } from '@/application/member/required/email-sender';
 import { PASSWORD_ENCODER } from '@/domain/member/password-encoder';
+import { DataSource } from 'typeorm';
 
 describe('MemberRepositoryTest', () => {
   let app: INestApplication;
   let memberRepository: MemberRepository;
+  let dataSource: DataSource;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -30,8 +32,14 @@ describe('MemberRepositoryTest', () => {
 
     app = moduleFixture.createNestApplication();
     memberRepository = moduleFixture.get<MemberRepository>(MEMBER_REPOSITORY);
+    dataSource = moduleFixture.get<DataSource>(DataSource);
 
     await app.init();
+  });
+
+  beforeEach(async () => {
+    // 각 테스트 전에 DB 초기화 (DROP & CREATE)
+    await dataSource.synchronize(true);
   });
 
   it('createMember', async () => {
