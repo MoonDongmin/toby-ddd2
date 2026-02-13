@@ -12,6 +12,7 @@ import { MemberRegisterRequest } from '@/domain/member/member-register.request';
 import { validateOrReject } from 'class-validator';
 import { EMAIL_SENDER } from '@/application/member/required/email-sender';
 import { MemberRegister } from '@/application/member/provided/member-register';
+import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.request';
 
 describe('Member Register Test', () => {
   let app: INestApplication;
@@ -61,17 +62,54 @@ describe('Member Register Test', () => {
     ).rejects.toThrow(DuplicateEmailException);
   });
 
-  it('activate', async () => {
-    // Given: 테스트 실행을 준비하는 단계
-    let member: Member = await memberRegister.register(
+  async function registerMember() {
+    const member: Member = await memberRegister.register(
       createMemberRegisterRequest(),
     );
+
+    return member;
+  }
+
+  it('activate', async () => {
+    // Given: 테스트 실행을 준비하는 단계
+    let member: Member = await registerMember();
 
     // When: 테스트를 진행하는 단계
     member = await memberRegister.activate(member.getId());
 
     // Then: 테스트 결과를 검증하는 단계
     expect(member.getStatus()).toBe(MemberStatus.ACTIVE);
+    expect(member.getDetail().getActivatedAt()).toBeDefined();
+  });
+
+  it('deactivate', async () => {
+    // Given: 테스트 실행을 준비하는 단계
+    let member: Member = await registerMember();
+
+    // When: 테스트를 진행하는 단계
+    member = await memberRegister.activate(member.getId());
+
+    // Then: 테스트 결과를 검증하는 단계
+    member = await memberRegister.deactivate(member.getId());
+
+    expect(member.getStatus()).toEqual(MemberStatus.DEACTIVATED);
+    expect(member.getDetail().getDeactivatedAt()).toBeDefined();
+  });
+
+  it('updateInfo', async () => {
+    // Given: 테스트 실행을 준비하는 단계
+    let member: Member = await registerMember();
+
+    // When: 테스트를 진행하는 단계
+    await memberRegister.activate(member.getId());
+
+    member = await memberRegister.updateInfo(
+      member.getId(),
+      new MemberInfoUpdateRequest('Peter', 'dongmin100', '자기소개'),
+    );
+
+    // Then: 테스트 결과를 검증하는 단계
+    expect(member.getDetail().getProfile().getAddress()).toEqual('dongmin100');
   });
 
   it('memberRegisterRequestFail', async () => {

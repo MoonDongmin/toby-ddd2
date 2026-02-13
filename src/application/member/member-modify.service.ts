@@ -20,6 +20,7 @@ import {
   MEMBER_FINDER,
   type MemberFinder,
 } from '@/application/member/provided/member-finder';
+import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.request';
 
 @Injectable()
 export class MemberModifyService implements MemberRegister {
@@ -33,7 +34,6 @@ export class MemberModifyService implements MemberRegister {
     @Inject(MEMBER_FINDER)
     private readonly memberFinder: MemberFinder,
   ) {}
-
   async register(
     memberRegisterRequest: MemberRegisterRequest,
   ): Promise<Member> {
@@ -47,14 +47,31 @@ export class MemberModifyService implements MemberRegister {
     await this.memberRepository.save(member);
 
     this.sendWelcomeEmail(member);
-
     return member;
   }
-
   async activate(memberId: number): Promise<Member> {
     const member: Member | null = await this.memberFinder.find(memberId);
 
     member.activate();
+
+    return this.memberRepository.save(member);
+  }
+
+  async deactivate(memberId: number): Promise<Member> {
+    const member: Member | null = await this.memberFinder.find(memberId);
+
+    member.deactivate();
+
+    return this.memberRepository.save(member);
+  }
+
+  async updateInfo(
+    memberId: number,
+    memberInfoUpdateRequest: MemberInfoUpdateRequest,
+  ): Promise<Member> {
+    const member: Member | null = await this.memberFinder.find(memberId);
+
+    member.updateInfo(memberInfoUpdateRequest);
 
     return this.memberRepository.save(member);
   }

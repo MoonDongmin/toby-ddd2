@@ -24,7 +24,7 @@ export class MemberDetail {
   @Column({ nullable: true })
   private introduction: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   private registeredAt: Date;
 
   @Column({ nullable: true })
