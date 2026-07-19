@@ -48,6 +48,10 @@ describe('Member Controller Test', () => {
     await dataSource.synchronize(true);
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('register', async () => {
     const registerRequest: MemberRegisterRequest =
       createMemberRegisterRequest();
@@ -92,7 +96,7 @@ describe('Member Controller Test', () => {
       .set('Content-Type', 'application/json')
       .send(duplicateRequestBody);
 
-    console.log('Response body:', response.body);
+    // console.log('Response body:', response.body);
 
     expect(response.status).toBe(HttpStatus.CONFLICT);
   });

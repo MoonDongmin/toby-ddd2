@@ -42,6 +42,10 @@ describe('Member Controller Test', () => {
     await dataSource.synchronize(true);
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('register', async () => {
     // Given: 테스트 실행을 준비하는 단계
     const member: Member = createMember(1);

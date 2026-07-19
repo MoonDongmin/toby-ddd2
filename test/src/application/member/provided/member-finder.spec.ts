@@ -41,6 +41,10 @@ describe('MemberFinderTest', () => {
     await dataSource.synchronize(true);
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('find', async () => {
     // Given: 테스트 실행을 준비하는 단계
     const member: Member | null = await memberRegister.register(

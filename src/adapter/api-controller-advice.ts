@@ -12,7 +12,7 @@ import { DuplicateProfileException } from '@/domain/member/duplicate-profile.exc
 
 @Catch()
 export class ApiControllerAdvice implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost) {
     const ctx: HttpArgumentsHost = host.switchToHttp();
     const response: Response = ctx.getResponse<Response>();
 
@@ -40,7 +40,8 @@ export class ApiControllerAdvice implements ExceptionFilter {
     }
 
     response.status(status).json({
-      exception: exception.name,
+      exception:
+        exception instanceof Error ? exception.name : 'UnknownException',
       statusCode: status,
       timestamp: new Date().toISOString(),
       detail: message,

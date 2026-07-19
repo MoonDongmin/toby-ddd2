@@ -91,11 +91,11 @@ export class MemberModifyService implements MemberRegister {
   ): Promise<void> {
     if (!profileAddress) return;
 
-    const currentProfile: Profile = member.getDetail().getProfile();
+    const currentProfile: Profile | null = member.getDetail().getProfile();
 
     if (
       currentProfile !== null &&
-      member.getDetail().getProfile().getAddress() === profileAddress
+      member.getDetail().getProfile()!.getAddress() === profileAddress
     )
       return;
 

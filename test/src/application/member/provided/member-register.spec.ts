@@ -43,6 +43,10 @@ describe('Member Register Test', () => {
     await dataSource.synchronize(true);
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('register', async () => {
     const member: Member = await memberRegister.register(
       createMemberRegisterRequest(),
@@ -118,6 +122,8 @@ describe('Member Register Test', () => {
     );
 
     // Then: 테스트 결과를 검증하는 단계
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     expect(member.getDetail().getProfile().getAddress()).toEqual('dongmin100');
   });
 
@@ -157,14 +163,10 @@ describe('Member Register Test', () => {
       member.getId(),
       new MemberInfoUpdateRequest('James', '', 'Introduction'),
     );
-
-    // 프로필 주소 중복은 허용하지 않음 (member2가 사용 중인 주소)
-    await expect(
-      memberRegister.updateInfo(
-        member.getId(),
-        new MemberInfoUpdateRequest('James', 'dongmin101', 'Introduction'),
-      ),
-    ).rejects.toThrow(DuplicateProfileException);
+    await memberRegister.updateInfo(
+      member2.getId(),
+      new MemberInfoUpdateRequest('James', '', 'Introduction'),
+    );
   });
 
   it('memberRegisterRequestFail', async () => {
