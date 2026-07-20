@@ -105,12 +105,12 @@ describe('MemberTest', () => {
     // Given: 테스트 실행을 준비하는 단계
     expect(() =>
       Member.register(
-        createMemberRegisterRequest('invalid email'),
+        createMemberRegisterRequest('invalid email').toInfo(),
         passwordEncoder,
       ),
     ).toThrowError();
 
-    Member.register(createMemberRegisterRequest(), passwordEncoder);
+    Member.register(createMemberRegisterRequest().toInfo(), passwordEncoder);
   });
 
   it('updateInfo', () => {
@@ -126,7 +126,7 @@ describe('MemberTest', () => {
 
     // Then: 테스트 결과를 검증하는 단계
     expect(member.getNickname()).toEqual(request.nickname);
-    expect(member.getDetail().getProfile().getAddress()).toEqual(
+    expect(member.getDetail().getProfile()!.getAddress()).toEqual(
       request.profileAddress,
     );
     expect(member.getDetail().getIntroduction()).toEqual(request.introduction);

@@ -1,4 +1,4 @@
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { PasswordEncoder } from '@/domain/member/password-encoder';
 import { Member } from '@/domain/member/member';
 
@@ -25,7 +25,7 @@ export function createMemberRegisterRequest(email?: string) {
 export function createMember(id?: number): Member {
   if (id) {
     const member: Member = Member.register(
-      createMemberRegisterRequest(),
+      createMemberRegisterRequest().toInfo(),
       createPasswordEncoder(),
     );
 
@@ -35,7 +35,7 @@ export function createMember(id?: number): Member {
   }
 
   return Member.register(
-    createMemberRegisterRequest(),
+    createMemberRegisterRequest().toInfo(),
     createPasswordEncoder(),
   );
 }

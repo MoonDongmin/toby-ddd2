@@ -8,7 +8,7 @@ import { MemberStatus } from '@/domain/member/member-status';
 import { SplearnTestConfiguration } from '../../../../splearn-test-configuration';
 import { DuplicateEmailException } from '@/domain/member/duplicate-email.exception';
 import { DataSource } from 'typeorm';
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { validateOrReject } from 'class-validator';
 import { EMAIL_SENDER } from '@/application/member/required/email-sender';
 import { MemberRegister } from '@/application/member/provided/member-register';

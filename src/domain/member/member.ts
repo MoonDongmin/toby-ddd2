@@ -2,7 +2,6 @@ import { MemberStatus } from '@/domain/member/member-status';
 import { Assert } from '@/common/util/assert';
 import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
 import { PasswordEncoder } from '@/domain/member/password-encoder';
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
 import { Email } from '@/domain/shared/email';
 import {
   Column,
@@ -13,6 +12,7 @@ import {
 } from 'typeorm';
 import { MemberDetail } from '@/domain/member/member-detail';
 import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.request';
+import { MemberRegisterInfo } from '@/domain/member/member-register-info';
 
 @Entity()
 export class Member {
@@ -63,7 +63,12 @@ export class Member {
   private constructor() {}
 
   public static register(
-    createRequest: MemberRegisterRequest,
+    createRequest: MemberRegisterInfo,
+    passwordEncoder: PasswordEncoder,
+  ): Member;
+
+  public static register(
+    createRequest: MemberRegisterInfo,
     passwordEncoder: PasswordEncoder,
   ): Member {
     if (

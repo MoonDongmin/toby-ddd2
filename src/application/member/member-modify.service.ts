@@ -1,5 +1,5 @@
 import { MemberRegister } from '@/application/member/provided/member-register';
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { Member } from '@/domain/member/member';
 import { Inject, Injectable } from '@nestjs/common';
 import {
@@ -43,7 +43,7 @@ export class MemberModifyService implements MemberRegister {
     await this.checkDuplicateEmail(memberRegisterRequest);
 
     const member: Member = Member.register(
-      memberRegisterRequest,
+      memberRegisterRequest.toInfo(),
       this.passwordEncoder,
     );
 

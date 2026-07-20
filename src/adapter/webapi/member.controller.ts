@@ -3,7 +3,7 @@ import {
   MEMBER_REGISTER,
   type MemberRegister,
 } from '@/application/member/provided/member-register';
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { MemberRegisterResponse } from '@/adapter/webapi/dto/member-register.response';
 import { Member } from '@/domain/member/member';
 
