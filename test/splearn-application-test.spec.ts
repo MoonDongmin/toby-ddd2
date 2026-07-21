@@ -52,7 +52,7 @@ describe('Application Bootstrap (e2e)', () => {
   });
 
   it('should bootstrap application successfully', () => {
-    console.log(app);
+    // console.log(app);
     expect(app).toBeDefined();
   });
 
