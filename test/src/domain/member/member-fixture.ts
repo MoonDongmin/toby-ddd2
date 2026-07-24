@@ -39,3 +39,10 @@ export function createMember(id?: number): Member {
     createPasswordEncoder(),
   );
 }
+
+export function createActiveMember(): Member {
+  const member: Member = createMember();
+  member.activate();
+
+  return member;
+}
