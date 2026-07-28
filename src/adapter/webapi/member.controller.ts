@@ -1,4 +1,5 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Inject, Post } from '@nestjs/common';
+import { WebApiAdapter } from '@/support/decorator/web-api-adapter.decorator';
 import {
   MEMBER_REGISTER,
   type MemberRegister,
@@ -7,7 +8,7 @@ import { MemberRegisterRequest } from '@/application/member/provided/member-regi
 import { MemberRegisterResponse } from '@/adapter/webapi/dto/member-register.response';
 import { Member } from '@/domain/member/member';
 
-@Controller()
+@WebApiAdapter()
 export class MemberController {
   constructor(
     @Inject(MEMBER_REGISTER)

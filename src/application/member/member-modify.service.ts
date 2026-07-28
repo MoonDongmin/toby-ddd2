@@ -1,7 +1,8 @@
 import { MemberRegister } from '@/application/member/provided/member-register';
 import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { Member } from '@/domain/member/member';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import { ApplicationService } from '@/support/decorator/application-service.decorator';
 import {
   EMAIL_SENDER,
   type EmailSender,
@@ -24,7 +25,7 @@ import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.requ
 import { Profile } from '@/domain/member/profile';
 import { DuplicateProfileException } from '@/domain/member/duplicate-profile.exception';
 
-@Injectable()
+@ApplicationService()
 export class MemberModifyService implements MemberRegister {
   constructor(
     @Inject(MEMBER_REPOSITORY)

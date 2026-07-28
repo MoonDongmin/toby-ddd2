@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import { ApplicationService } from '@/support/decorator/application-service.decorator';
 import { MemberAuthenticator } from '@/application/member/provided/member-authenticator';
 import { Member } from '@/domain/member/member';
 import { LoginFailedException } from './provided/login-failed.exception';
@@ -13,7 +14,7 @@ import {
 } from '@/domain/member/password-encoder';
 import { Email } from '@/domain/shared/email';
 
-@Injectable()
+@ApplicationService()
 export class MemberAuthenticationService implements MemberAuthenticator {
   constructor(
     @Inject(MEMBER_REPOSITORY)

@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import { ApplicationService } from '@/support/decorator/application-service.decorator';
 import { InstructorApplication } from '@/application/instructor/provided/instructor-application';
 import { InstructorApplyRequest } from '@/application/instructor/provided/instructor-apply.request';
 import { Instructor } from '@/domain/instructor/instructor';
@@ -17,7 +18,7 @@ import {
 import { Member } from '@/domain/member/member';
 import { DuplicatedInstructorApplicationException } from '@/application/instructor/provided/duplicated-instructor-application.excpetion';
 
-@Injectable()
+@ApplicationService()
 export class InstructorModifyService implements InstructorApplication {
   constructor(
     @Inject(INSTRUCTOR_REPOSITORY)

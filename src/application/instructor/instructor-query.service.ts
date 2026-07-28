@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import { ApplicationService } from '@/support/decorator/application-service.decorator';
 import { InstructorFinder } from '@/application/instructor/provided/instructor-finder';
 import { Instructor } from '@/domain/instructor/instructor';
 import {
@@ -7,7 +8,7 @@ import {
 } from '@/application/instructor/required/instructor-repository';
 import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
 
-@Injectable()
+@ApplicationService()
 export class InstructorQueryService implements InstructorFinder {
   constructor(
     @Inject(INSTRUCTOR_REPOSITORY)
