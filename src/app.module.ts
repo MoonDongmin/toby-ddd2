@@ -6,6 +6,8 @@ import { Member } from '@/domain/member/member';
 import { MemberModule } from '@/application/member/member.module';
 import { MemberDetail } from '@/domain/member/member-detail';
 import { ApiControllerAdvice } from '@/adapter/api-controller-advice';
+import { InstructorModule } from '@/application/instructor/instructor.module';
+import { Instructor } from '@/domain/instructor/instructor';
 
 @Module({
   imports: [
@@ -19,12 +21,12 @@ import { ApiControllerAdvice } from '@/adapter/api-controller-advice';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Member, MemberDetail],
+      entities: [Member, MemberDetail, Instructor],
       synchronize: true,
       // dropSchema: true,
     }),
-    TypeOrmModule.forFeature([Member, MemberDetail]),
     MemberModule,
+    InstructorModule,
   ],
   controllers: [],
   providers: [

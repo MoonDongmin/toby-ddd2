@@ -1,11 +1,11 @@
 import { Instructor } from '@/domain/instructor/instructor';
 
 export interface InstructorFinder {
-  find(instructorId: number): Instructor;
+  find(instructorId: number): Promise<Instructor>;
 
-  findByMember(memberId: number): Instructor | null;
+  findByMember(memberId: number): Promise<Instructor | null>;
 
-  findByMember(member: number): Instructor | null;
+  findByMember(memberId: number): Promise<Instructor | null>;
 }
 
 export const INSTRUCTOR_FINDER: symbol = Symbol('InstructorFinder');

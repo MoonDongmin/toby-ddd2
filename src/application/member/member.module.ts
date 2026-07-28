@@ -16,7 +16,7 @@ import { MemberAuthenticationService } from '@/application/member/member-authent
 @Module({
   imports: [TypeOrmModule.forFeature([Member])],
   controllers: [MemberController],
-  exports: [MemberModifyService],
+  exports: [MemberModifyService, MEMBER_FINDER],
   providers: [
     MemberModifyService,
     MemberQueryService,

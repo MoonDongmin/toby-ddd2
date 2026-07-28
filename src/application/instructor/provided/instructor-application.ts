@@ -5,11 +5,11 @@ import { InstructorApplyRequest } from '@/application/instructor/provided/instru
  * 강사 신청
  */
 export interface InstructorApplication {
-  apply(applyRequest: InstructorApplyRequest): Instructor;
+  apply(applyRequest: InstructorApplyRequest): Promise<Instructor>;
 
-  approve(memberId: number): Instructor;
+  approve(instructorId: number): Promise<Instructor>;
 
-  reject(memberId: number): Instructor;
+  reject(instructorId: number): Promise<Instructor>;
 }
 
 export const INSTRUCTOR_APPLICATION: symbol = Symbol('InstructorApplication');
