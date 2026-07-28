@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { DataSource, QueryFailedError } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { SplearnTestConfiguration } from '../../../../splearn-test-configuration';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@/app.module';
@@ -13,12 +13,13 @@ import {
   MemberRepository,
 } from '@/application/member/required/member-repository';
 import { Instructor } from '@/domain/instructor/instructor';
-import { InstructorApplyRequest } from '@/application/instructor/provided/instructor-apply.request';
 import { InstructorStatus } from '@/domain/instructor/instructor-status.enum';
 import {
   INSTRUCTOR_REPOSITORY,
   InstructorRepository,
 } from '@/application/instructor/required/instructor-repository';
+import { InstructorFixture } from '../../../domain/instructor/instructor-fixture';
+import { DuplicatedInstructorApplicationException } from '@/application/instructor/provided/duplicated-instructor-application.excpetion';
 
 describe('InstructorApplicationTest', () => {
   let app: INestApplication;
@@ -64,7 +65,7 @@ describe('InstructorApplicationTest', () => {
     await memberRepository.save(member);
 
     const instructor: Instructor = await instructorApplication.apply(
-      new InstructorApplyRequest(member.getId()),
+      InstructorFixture.createApplyRequest(member),
     );
 
     expect(instructor.id).not.toBeNull();
@@ -78,12 +79,12 @@ describe('InstructorApplicationTest', () => {
     await memberRepository.save(member);
 
     await instructorApplication.apply(
-      new InstructorApplyRequest(member.getId()),
+      InstructorFixture.createApplyRequest(member),
     );
 
     await expect(
-      instructorApplication.apply(new InstructorApplyRequest(member.getId())),
-    ).rejects.toThrow(QueryFailedError);
+      instructorApplication.apply(InstructorFixture.createApplyRequest(member)),
+    ).rejects.toThrow(DuplicatedInstructorApplicationException);
   });
 
   it('approve', async () => {
@@ -106,7 +107,7 @@ describe('InstructorApplicationTest', () => {
     const member: Member = createActiveMember();
     await memberRepository.save(member);
     return await instructorApplication.apply(
-      new InstructorApplyRequest(member.getId()),
+      InstructorFixture.createApplyRequest(member),
     );
   }
 });

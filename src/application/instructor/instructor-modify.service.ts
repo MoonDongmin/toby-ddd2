@@ -15,6 +15,7 @@ import {
   type InstructorFinder,
 } from '@/application/instructor/provided/instructor-finder';
 import { Member } from '@/domain/member/member';
+import { DuplicatedInstructorApplicationException } from '@/application/instructor/provided/duplicated-instructor-application.excpetion';
 
 @Injectable()
 export class InstructorModifyService implements InstructorApplication {
@@ -30,9 +31,19 @@ export class InstructorModifyService implements InstructorApplication {
   async apply(applyRequest: InstructorApplyRequest): Promise<Instructor> {
     const member: Member = await this.memberFinder.find(applyRequest.memberId);
 
+    await this.checkDuplicateApplication(member);
+
     const instructor: Instructor = Instructor.apply(member);
 
     return this.instructorRepository.save(instructor);
+  }
+
+  private async checkDuplicateApplication(member: Member) {
+    if (await this.instructorRepository.findByMemberId(member.getId())) {
+      throw new DuplicatedInstructorApplicationException(
+        '회원은 중복해서 강사 신청을 할 수 없습니다.',
+      );
+    }
   }
 
   async approve(instructorId: number): Promise<Instructor> {

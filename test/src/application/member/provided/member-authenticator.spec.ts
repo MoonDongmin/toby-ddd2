@@ -63,9 +63,11 @@ describe('MemberAuthenticatorTest', () => {
     member.activate();
     await memberRepository.save(member);
 
-    await memberAuthenticator.login(
+    const loggedInMember = await memberAuthenticator.login(
       new MemberLoginRequest(registerRequest.email, registerRequest.password),
     );
+
+    expect(loggedInMember).toEqual(member);
   });
 
   it('loginFailedNotActive', async () => {

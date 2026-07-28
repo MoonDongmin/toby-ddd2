@@ -3,6 +3,7 @@ import { createActiveMember, createMember } from '../member/member-fixture';
 import { Instructor } from '@/domain/instructor/instructor';
 import { InstructorStatus } from '@/domain/instructor/instructor-status.enum';
 import { IllegalStateException } from '@/common/exceptions/illegal-argument.exception';
+import { InstructorFixture } from './instructor-fixture';
 
 describe('InstructorTest', () => {
   it('apply', () => {
@@ -21,8 +22,7 @@ describe('InstructorTest', () => {
   });
 
   it('approve', () => {
-    const member: Member = createActiveMember();
-    const instructor: Instructor = Instructor.apply(member);
+    const instructor: Instructor = InstructorFixture.createInstructor();
 
     instructor.approve();
 
@@ -30,16 +30,13 @@ describe('InstructorTest', () => {
   });
 
   it('approveFailed', () => {
-    const member: Member = createActiveMember();
-    const instructor: Instructor = Instructor.apply(member);
-    instructor.approve();
+    const instructor: Instructor = InstructorFixture.createActiveInstructor();
 
     expect(() => instructor.approve()).toThrow(IllegalStateException);
   });
 
   it('reject', () => {
-    const member: Member = createActiveMember();
-    const instructor: Instructor = Instructor.apply(member);
+    const instructor: Instructor = InstructorFixture.createInstructor();
 
     instructor.reject();
 
@@ -47,8 +44,8 @@ describe('InstructorTest', () => {
   });
 
   it('rejectFailed', () => {
-    const member: Member = createActiveMember();
-    const instructor: Instructor = Instructor.apply(member);
+    const instructor: Instructor = InstructorFixture.createInstructor();
+
     instructor.reject();
 
     expect(() => instructor.reject()).toThrow(IllegalStateException);
