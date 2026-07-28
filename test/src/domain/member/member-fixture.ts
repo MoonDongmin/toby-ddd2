@@ -1,6 +1,8 @@
 import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { PasswordEncoder } from '@/domain/member/password-encoder';
 import { Member } from '@/domain/member/member';
+import { createInstance } from '../../../instancio';
+import { faker } from '@faker-js/faker';
 
 export function createPasswordEncoder(): PasswordEncoder {
   return {
@@ -14,12 +16,10 @@ export function createPasswordEncoder(): PasswordEncoder {
   };
 }
 
-export function createMemberRegisterRequest(email?: string) {
-  return new MemberRegisterRequest(
-    email ? email : 'dongmin@naver.com',
-    'Dongmin',
-    'secret',
-  );
+export function createMemberRegisterRequest(
+  email: string = faker.internet.email(),
+) {
+  return createInstance(MemberRegisterRequest, { email });
 }
 
 export function createMember(id?: number): Member {

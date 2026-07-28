@@ -57,13 +57,12 @@ describe('Member Register Test', () => {
   });
 
   it('duplicateEmailFail', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const member: Member = await memberRegister.register(
-      createMemberRegisterRequest(),
-    );
+    const email = 'duplicate@splearn.app';
+
+    await memberRegister.register(createMemberRegisterRequest(email));
 
     await expect(
-      memberRegister.register(createMemberRegisterRequest()),
+      memberRegister.register(createMemberRegisterRequest(email)),
     ).rejects.toThrow(DuplicateEmailException);
   });
 
