@@ -1,20 +1,21 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CourseUpdateInfo } from '@/domain/course/course-update-info';
 
 @Entity()
 export class CourseDetail {
   @PrimaryGeneratedColumn()
   private readonly id: number;
 
-  @Column({ length: 500 })
-  private readonly _description: string | null;
+  @Column({ name: 'description', type: 'varchar', length: 500, nullable: true })
+  private _description: string | null;
 
-  @Column()
+  @Column({ name: 'created_at', nullable: false })
   private readonly _createdAt: Date;
 
-  @Column()
+  @Column({ name: 'published_at', nullable: true })
   private _publishedAt: Date;
 
-  @Column()
+  @Column({ name: 'archived_at', nullable: true })
   private _archivedAt: Date;
 
   constructor(description: string | null) {
@@ -28,6 +29,10 @@ export class CourseDetail {
 
   public archive(): void {
     this._archivedAt = new Date();
+  }
+
+  public updateInfo(updateInfo: CourseUpdateInfo) {
+    this._description = updateInfo.description;
   }
 
   public getDescription(): string | null {

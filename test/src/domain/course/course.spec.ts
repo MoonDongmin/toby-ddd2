@@ -4,12 +4,14 @@ import { Instructor } from '@/domain/instructor/instructor';
 import { CourseStatus } from '@/domain/course/course-status';
 import { IllegalStateException } from '@/common/exceptions/illegal-argument.exception';
 import { CourseFixture } from './course-fixture';
+import { CourseUpdateInfo } from '@/domain/course/course-update-info';
 
 describe('CourseTest', () => {
   let course: Course;
 
   beforeEach(() => {
     course = CourseFixture.createCourse();
+    course.updateInfo(new CourseUpdateInfo(course.getTitle(), 'Description'));
   });
 
   it('create', () => {
@@ -44,6 +46,13 @@ describe('CourseTest', () => {
     expect(() => course.submitForReview()).toThrow(IllegalStateException);
   });
 
+  it('submitForReviewFail', () => {
+    const instructor: Instructor = InstructorFixture.createActiveInstructor();
+    const course: Course = new Course(instructor, 'Clean Spring 2', null);
+
+    expect(() => course.submitForReview()).toThrow(IllegalStateException);
+  });
+
   it('publish', () => {
     course.submitForReview();
 
@@ -65,5 +74,14 @@ describe('CourseTest', () => {
     expect(course.getDetail().getArchivedAt()).toBeDefined();
 
     expect(() => course.archive()).toThrow(IllegalStateException);
+  });
+
+  it('updateInfo', () => {
+    course.updateInfo(
+      new CourseUpdateInfo('Clean Spring 3', 'Update Description'),
+    );
+
+    expect(course.getTitle()).toEqual('Clean Spring 3');
+    expect(course.getDetail().getDescription()).toEqual('Update Description');
   });
 });

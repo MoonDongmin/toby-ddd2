@@ -11,7 +11,7 @@ import { Assert } from '@/common/util/assert';
 
 @Entity()
 export class Instructor {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   private _id: number;
 
   @OneToOne(() => Member, { eager: false })
@@ -19,6 +19,7 @@ export class Instructor {
   private _member: Member;
 
   @Column({
+    name: 'status',
     type: 'enum',
     enum: InstructorStatus,
   })

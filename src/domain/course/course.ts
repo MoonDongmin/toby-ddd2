@@ -11,20 +11,26 @@ import { CourseStatus } from '@/domain/course/course-status';
 import { CourseDetail } from '@/domain/course/course-detail';
 import { IllegalArgumentException } from '@/common/exceptions/illegal-argument.exception';
 import { Assert } from '@/common/util/assert';
+import { CourseUpdateInfo } from '@/domain/course/course-update-info';
 
 @Entity()
 export class Course {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   private readonly _id: number;
 
   @ManyToOne(() => Instructor, { nullable: false, eager: false })
   @JoinColumn({ name: 'instructor_id' })
   private readonly _instructor: Instructor;
 
-  @Column({ nullable: false, length: 100 })
+  @Column({ name: 'title', nullable: false, length: 100 })
   _title: string;
 
-  @Column({ nullable: false, type: 'enum', enum: CourseStatus, length: 20 })
+  @Column({
+    name: 'status',
+    nullable: false,
+    type: 'enum',
+    enum: CourseStatus,
+  })
   private _status: CourseStatus;
 
   @OneToOne(() => CourseDetail, {
@@ -53,6 +59,10 @@ export class Course {
 
   public submitForReview(): void {
     Assert.state(this._status === CourseStatus.DRAFT, 'DRAFT 상태가 아닙니다.');
+    Assert.state(
+      !!this._detail.getDescription()?.trim(),
+      '강의 소개가 등록되지 않았습니다.',
+    );
 
     this._status = CourseStatus.IN_REVIEW;
   }
@@ -86,6 +96,11 @@ export class Course {
       this._status === CourseStatus.PUBLISHED,
       'PUBLISHED 상태가 아닙니다.',
     );
+  }
+
+  public updateInfo(updateInfo: CourseUpdateInfo): void {
+    this._title = updateInfo.title;
+    this._detail.updateInfo(updateInfo);
   }
 
   public getId(): number {
