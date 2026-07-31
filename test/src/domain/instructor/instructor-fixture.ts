@@ -8,7 +8,14 @@ export class InstructorFixture {
     return Instructor.apply(member ?? createActiveMember());
   }
 
-  public static createActiveInstructor(): Instructor {
+  public static createActiveInstructor(member?: Member): Instructor {
+    if (member) {
+      const instructor: Instructor = this.createInstructor(member);
+      instructor.approve();
+
+      return instructor;
+    }
+
     const instructor: Instructor = this.createInstructor();
     instructor.approve();
     return instructor;

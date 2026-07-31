@@ -8,6 +8,9 @@ import { MemberDetail } from '@/domain/member/member-detail';
 import { ApiControllerAdvice } from '@/adapter/api-controller-advice';
 import { InstructorModule } from '@/application/instructor/instructor.module';
 import { Instructor } from '@/domain/instructor/instructor';
+import { CourseModule } from '@/application/course/course.module';
+import { Course } from '@/domain/course/course';
+import { CourseDetail } from '@/domain/course/course-detail';
 
 @Module({
   imports: [
@@ -21,12 +24,16 @@ import { Instructor } from '@/domain/instructor/instructor';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Member, MemberDetail, Instructor],
+      entities: [Member, MemberDetail, Instructor, Course, CourseDetail],
+      // TypeORM이 엔티티를 하이드레이션할 때 생성자를 호출하지 않도록 한다.
+      // (인자 검증이 있는 Course 생성자가 no-arg 호출로 깨지는 것을 방지)
+      entitySkipConstructor: true,
       synchronize: true,
       // dropSchema: true,
     }),
     MemberModule,
     InstructorModule,
+    CourseModule,
   ],
   controllers: [],
   providers: [

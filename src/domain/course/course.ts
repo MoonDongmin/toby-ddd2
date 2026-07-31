@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { Instructor } from '@/domain/instructor/instructor';
 import { CourseStatus } from '@/domain/course/course-status';
@@ -14,6 +15,7 @@ import { Assert } from '@/common/util/assert';
 import { CourseUpdateInfo } from '@/domain/course/course-update-info';
 
 @Entity()
+@Unique('UK_INSTRUCTOR_TITLE', ['_instructor', '_title'])
 export class Course {
   @PrimaryGeneratedColumn({ name: 'id' })
   private readonly _id: number;
