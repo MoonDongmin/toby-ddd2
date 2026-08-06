@@ -11,14 +11,16 @@ import { MEMBER_FINDER } from '@/application/member/provided/member-finder';
 import { SecurePasswordEncoder } from '@/adapter/security/secure-password-encoder';
 import { MemberController } from '@/adapter/webapi/member.controller';
 import { MEMBER_REGISTER } from '@/application/member/provided/member-register';
+import { MemberAuthenticationService } from '@/application/member/member-authentication.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Member])],
   controllers: [MemberController],
-  exports: [MemberModifyService],
+  exports: [MemberModifyService, MEMBER_FINDER],
   providers: [
     MemberModifyService,
     MemberQueryService,
+    MemberAuthenticationService,
     {
       provide: MEMBER_REPOSITORY,
       useClass: MemberRepositoryImpl,

@@ -1,0 +1,6 @@
+export enum CourseStatus {
+  DRAFT = 'DRAFT',
+  IN_REVIEW = 'IN_REVIEW',
+  PUBLISHED = 'PUBLISHED',
+  ARCHIVED = 'ARCHIVED',
+}

@@ -1,4 +1,5 @@
 import { IsEmail, IsString, Length } from 'class-validator';
+import { MemberRegisterInfo } from '@/domain/member/member-register-info';
 
 export class MemberRegisterRequest {
   @IsEmail()
@@ -16,5 +17,9 @@ export class MemberRegisterRequest {
     this.email = email;
     this.nickname = nickname;
     this.password = password;
+  }
+
+  public toInfo(): MemberRegisterInfo {
+    return new MemberRegisterInfo(this.email, this.nickname, this.password);
   }
 }

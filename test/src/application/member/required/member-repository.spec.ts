@@ -42,10 +42,14 @@ describe('MemberRepositoryTest', () => {
     await dataSource.synchronize(true);
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('createMember', async () => {
     // Given: 테스트 실행을 준비하는 단계
     const member: Member = Member.register(
-      createMemberRegisterRequest(),
+      createMemberRegisterRequest().toInfo(),
       createPasswordEncoder(),
     );
 
@@ -68,7 +72,7 @@ describe('MemberRepositoryTest', () => {
   it('duplicateEmailFail', async () => {
     // Given: 테스트 실행을 준비하는 단계
     const member: Member = Member.register(
-      createMemberRegisterRequest('AAA@test.com'),
+      createMemberRegisterRequest('AAA@test.com').toInfo(),
       createPasswordEncoder(),
     );
 
@@ -76,7 +80,7 @@ describe('MemberRepositoryTest', () => {
 
     // When: 테스트를 진행하는 단계
     const member2: Member = Member.register(
-      createMemberRegisterRequest('AAA@test.com'),
+      createMemberRegisterRequest('AAA@test.com').toInfo(),
       createPasswordEncoder(),
     );
 

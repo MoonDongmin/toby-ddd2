@@ -1,4 +1,4 @@
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { Member } from '@/domain/member/member';
 import { MemberInfoUpdateRequest } from '@/domain/member/member-info-update.request';
 

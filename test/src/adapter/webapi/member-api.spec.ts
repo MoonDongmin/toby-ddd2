@@ -9,7 +9,7 @@ import { SplearnTestConfiguration } from '../../../splearn-test-configuration';
 import { createMemberRegisterRequest } from '../../domain/member/member-fixture';
 import { Member } from '@/domain/member/member';
 import request, { Response } from 'supertest';
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import {
   MEMBER_REPOSITORY,
   MemberRepository,
@@ -46,6 +46,10 @@ describe('Member Controller Test', () => {
 
   beforeEach(async () => {
     await dataSource.synchronize(true);
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   it('register', async () => {
@@ -92,7 +96,7 @@ describe('Member Controller Test', () => {
       .set('Content-Type', 'application/json')
       .send(duplicateRequestBody);
 
-    console.log('Response body:', response.body);
+    // console.log('Response body:', response.body);
 
     expect(response.status).toBe(HttpStatus.CONFLICT);
   });

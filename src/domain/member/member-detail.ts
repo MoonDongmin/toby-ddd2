@@ -19,7 +19,7 @@ export class MemberDetail {
     unique: true,
     length: 20,
   })
-  private profile: Profile;
+  private profile: Profile | null;
 
   @Column({ nullable: true })
   private introduction: string;
@@ -43,7 +43,7 @@ export class MemberDetail {
     return this.id;
   }
 
-  public getProfile(): Profile {
+  public getProfile(): Profile | null {
     return this.profile;
   }
 
@@ -82,8 +82,15 @@ export class MemberDetail {
   }
 
   updateInfo(updateRequest: MemberInfoUpdateRequest): void {
-    this.profile = new Profile(updateRequest.profileAddress);
-
+    this.profile = this.convertToProfile(updateRequest.profileAddress);
     this.introduction = updateRequest.introduction!;
+  }
+
+  private convertToProfile(profileAddress: string): Profile | null {
+    if (profileAddress === null || profileAddress.length === 0) {
+      return null;
+    }
+
+    return new Profile(profileAddress);
   }
 }

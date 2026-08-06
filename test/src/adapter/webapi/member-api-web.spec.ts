@@ -12,7 +12,7 @@ import {
 } from '../../domain/member/member-fixture';
 import { Member } from '@/domain/member/member';
 import request, { Response } from 'supertest';
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 
 describe('Member Controller Test', () => {
   let app: INestApplication;
@@ -40,6 +40,10 @@ describe('Member Controller Test', () => {
 
   beforeEach(async () => {
     await dataSource.synchronize(true);
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   it('register', async () => {

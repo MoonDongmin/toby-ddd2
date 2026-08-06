@@ -47,8 +47,12 @@ describe('Application Bootstrap (e2e)', () => {
     await dataSource.synchronize(true);
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('should bootstrap application successfully', () => {
-    console.log(app);
+    // console.log(app);
     expect(app).toBeDefined();
   });
 

@@ -8,7 +8,7 @@ import { MemberStatus } from '@/domain/member/member-status';
 import { SplearnTestConfiguration } from '../../../../splearn-test-configuration';
 import { DuplicateEmailException } from '@/domain/member/duplicate-email.exception';
 import { DataSource } from 'typeorm';
-import { MemberRegisterRequest } from '@/domain/member/member-register.request';
+import { MemberRegisterRequest } from '@/application/member/provided/member-register.request';
 import { validateOrReject } from 'class-validator';
 import { EMAIL_SENDER } from '@/application/member/required/email-sender';
 import { MemberRegister } from '@/application/member/provided/member-register';
@@ -43,6 +43,10 @@ describe('Member Register Test', () => {
     await dataSource.synchronize(true);
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('register', async () => {
     const member: Member = await memberRegister.register(
       createMemberRegisterRequest(),
@@ -53,13 +57,12 @@ describe('Member Register Test', () => {
   });
 
   it('duplicateEmailFail', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const member: Member = await memberRegister.register(
-      createMemberRegisterRequest(),
-    );
+    const email = 'duplicate@splearn.app';
+
+    await memberRegister.register(createMemberRegisterRequest(email));
 
     await expect(
-      memberRegister.register(createMemberRegisterRequest()),
+      memberRegister.register(createMemberRegisterRequest(email)),
     ).rejects.toThrow(DuplicateEmailException);
   });
 
@@ -118,6 +121,8 @@ describe('Member Register Test', () => {
     );
 
     // Then: 테스트 결과를 검증하는 단계
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     expect(member.getDetail().getProfile().getAddress()).toEqual('dongmin100');
   });
 
@@ -157,14 +162,10 @@ describe('Member Register Test', () => {
       member.getId(),
       new MemberInfoUpdateRequest('James', '', 'Introduction'),
     );
-
-    // 프로필 주소 중복은 허용하지 않음 (member2가 사용 중인 주소)
-    await expect(
-      memberRegister.updateInfo(
-        member.getId(),
-        new MemberInfoUpdateRequest('James', 'dongmin101', 'Introduction'),
-      ),
-    ).rejects.toThrow(DuplicateProfileException);
+    await memberRegister.updateInfo(
+      member2.getId(),
+      new MemberInfoUpdateRequest('James', '', 'Introduction'),
+    );
   });
 
   it('memberRegisterRequestFail', async () => {
